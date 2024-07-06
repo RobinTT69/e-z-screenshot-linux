@@ -1,12 +1,12 @@
 # Dependencies
-The dependencies for this script are `grim` and `jq` which can be installed by
+The dependencies for this script are `grim`, `jq` and `slurp` which can be installed by
 
-**On Arch:** `sudo pacman -S grim jq`
+**On Arch:** `sudo pacman -S grim jq slurp`
 
 **On Debian/Ubuntu based systems** `sudo apt-get update` and then
-`sudo apt-get install grim jq`
+`sudo apt-get install grim jq slurp`
 
-**On Fedora based systems** `sudo dnf install grim jq`
+**On Fedora based systems** `sudo dnf install grim jq slurp`
 
 # Usage
 
@@ -33,7 +33,7 @@ Now paste that API key into the script and you should be good to go.
 
 # Disclaimer
 
-This script was designed with wayland in mind, so if you are running this on x11 for whatever reason, you could try to replace `wl-copy` with `xclip` or `xsel`, although there are no guarantees that it would work.
+This script was designed with wayland in mind, so if you are running x11, look into using the flameshot alternative for this made by [SKRRRTT](https://github.com/ignSKRRRTT/e-z-flameshot-script).
 
 # Credits 
 Credits to https://github.com/KeiranScript for helping me make this amazing readme!
