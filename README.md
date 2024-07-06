@@ -31,6 +31,8 @@ Finally, using your favourite text editor, replace `'{YOUR-API-KEY}'` in
 
 Now paste that API key into the script and you should be good to go. 
 
+# Disclaimer
+
 This script was designed with wayland in mind, so if you are running this on x11 for whatever reason, try replacing `wl-copy` with `xclip` or `xsel`, although there are no guarantees that it would work.
 
 # Credit to https://github.com/KeiranScript for helping me make this amazing readme!
