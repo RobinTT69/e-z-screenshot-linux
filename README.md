@@ -1,5 +1,5 @@
 # Dependencies
-The dependencies for this script are `grim`, `jq` and `slurp` which can be installed by
+The dependencies for this script are `grim`, `jq` and `slurp`. To install:
 
 **On Arch:** `sudo pacman -S grim jq slurp`
 
