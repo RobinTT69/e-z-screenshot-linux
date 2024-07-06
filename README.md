@@ -3,6 +3,11 @@ The dependencies for this script are `grim` and `jq` which can be installed by
 
 **On Arch:** `pacman -S grim jq`
 
+**On Debian/Ubuntu based systems** `sudo apt-get update
+sudo apt-get install grim jq`
+
+**On Fedora based systems** `sudo dnf install grim jq`
+
 # Usage
 
 In order to use this script, type the following commands into the terminal:
