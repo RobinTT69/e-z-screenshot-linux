@@ -3,8 +3,8 @@ The dependencies for this script are `grim`, `jq` and `slurp`. To install:
 
 **On Arch:** `sudo pacman -S grim jq slurp`
 
-**On Debian/Ubuntu based systems** `sudo apt-get update` and then
-`sudo apt-get install grim jq slurp`
+**On Debian/Ubuntu based systems** `sudo apt update` and then
+`sudo apt install grim jq slurp`
 
 **On Fedora based systems** `sudo dnf install grim jq slurp`
 
