@@ -31,7 +31,7 @@ Finally, using your favourite text editor, replace `'{YOUR-API-KEY}'` in
 
 Now paste that API key into the script and you should be good to go. 
 
-# Bind script to keyboard shortcut on Hyprland
+# Bind script to keyboard shortcut on Hyprland (Optional)
 
 If you plan on using this on Hyprland, and want to bind it to a keyboard shortcut do the following:
 
