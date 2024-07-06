@@ -33,17 +33,18 @@ Now paste that API key into the script and you should be good to go.
 
 # Bind script to keyboard shortcut on Hyprland (Optional)
 
-If you plan on using this on Hyprland, and want to bind it to a keyboard shortcut do the following:
+- **If you plan on using this on Hyprland, and want to bind it to a keyboard shortcut do the following:**
 
-## Open up hyprland.conf 
+  - **Open up hyprland.conf**
+    
+    Open up `~/.config/hypr/hyprland.conf` with your favourite text editor.
+  
+  - **Add the bind**
+    
+    Add `bind = ,code:82, exec, sh ~/PATH-TO-SCRIPT &` to the file. Replace the `,code:82` with your desired [key](https://wiki.hyprland.org/Configuring/Binds/), and make sure to specify the path to script.
+  
+    ![image](https://i.e-z.host/fyp7qsmt.png)
 
-Open up `~/.config/hypr/hyprland.conf` with your favourite text editor.
-
-## Add the bind
-
-Add `bind = ,code:82, exec, sh ~/PATH-TO-SCRIPT &` to the file. Replace the `,code:82` with your desired [key](https://wiki.hyprland.org/Configuring/Binds/), and make sure to specify the path to script.
-
-![image](https://i.e-z.host/fyp7qsmt.png)
 
 # Disclaimer
 
