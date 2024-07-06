@@ -29,6 +29,8 @@ Finally, using your favourite text editor, replace `'{YOUR-API-KEY}'` in
 
 ![image](https://github.com/KeiranScript/e-z-grim/assets/159267417/8c62ae8d-171a-4a7d-b723-2ac92d031b80)
 
-Now paste that API key into the script and you should be good to go. Remember to report any bugs inside a github issue :)
+Now paste that API key into the script and you should be good to go. 
 
-# Credit to https://github.com/KeiranScript for this amazing readme!
+This script was designed with wayland in mind, so if you are running this on x11 for whatever reason, try replacing `wl-copy` with `xclip` or `xsel`, although there are no guarantees that that would work.
+
+# Credit to https://github.com/KeiranScript for helping me make this amazing readme!
