@@ -43,7 +43,7 @@ Open up `~/.config/hypr/hyprland.conf` with your favourite text editor.
 
 Add `bind = ,code:82, exec, sh ~/PATH-TO-SCRIPT &` to the file. Replace the `,code:82` with your desired [key](https://wiki.hyprland.org/Configuring/Binds/), and make sure to specify the path to script.
 
-Example: ![image](https://i.e-z.host/fyp7qsmt.png)
+![image](https://i.e-z.host/fyp7qsmt.png)
 
 # Disclaimer
 
