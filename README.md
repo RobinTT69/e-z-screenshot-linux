@@ -50,4 +50,4 @@ Add `bind = ,code:82, exec, sh ~/PATH-TO-SCRIPT &` to the file. Replace the `,co
 This script was designed with wayland in mind, so if you are running x11, look into using the flameshot alternative for this made by [SKRRRTT](https://github.com/ignSKRRRTT/e-z-flameshot-script).
 
 # Credits 
-Credits to https://github.com/KeiranScript for helping me make this amazing readme!
+Credits to https://github.com/KeiranScript for helping me make this amazing readme and adding additional checks to the script.
