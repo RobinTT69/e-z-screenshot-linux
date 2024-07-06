@@ -1,6 +1,6 @@
 #!/bin/sh
 
-response=$(grim -g "$(slurp)" -t jpeg - | curl -sS -X POST -H "key: {YOUR-API-KEY} -F "file=@-" https://api.e-z.host/files)
+response=$(grim -g "$(slurp)" -t jpeg - | curl -sS -X POST -H "key: {YOUR-API-KEY}" -F "file=@-" https://api.e-z.host/files)
 
 
 if [ -z "$response" ]; then
