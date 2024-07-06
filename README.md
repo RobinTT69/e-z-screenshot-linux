@@ -12,7 +12,7 @@ The dependencies for this script are `grim`, `jq` and `slurp`. To install:
 
 In order to use this script, type the following commands into the terminal:
 
-`$ git clone https://github.com/6942690/e-z-screenshot-grim-linux`
+`$ git clone https://github.com/RobinTT69/e-z-screenshot-grim-linux`
 
 `$ cd e-z-screenshot-grim-linux`
 
