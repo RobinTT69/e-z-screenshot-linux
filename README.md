@@ -1,7 +1,7 @@
 # Dependencies
 The dependencies for this script are `grim` and `jq` which can be installed by
 
-**On Arch:** `pacman -S grim jq`
+**On Arch:** `sudo pacman -S grim jq`
 
 **On Debian/Ubuntu based systems** `sudo apt-get update` and then
 `sudo apt-get install grim jq`
@@ -33,7 +33,7 @@ Now paste that API key into the script and you should be good to go.
 
 # Disclaimer
 
-This script was designed with wayland in mind, so if you are running this on x11 for whatever reason, try replacing `wl-copy` with `xclip` or `xsel`, although there are no guarantees that it would work.
+This script was designed with wayland in mind, so if you are running this on x11 for whatever reason, you could try to replace `wl-copy` with `xclip` or `xsel`, although there are no guarantees that it would work.
 
 # Credits 
 Credits to https://github.com/KeiranScript for helping me make this amazing readme!
