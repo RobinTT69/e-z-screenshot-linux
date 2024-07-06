@@ -13,7 +13,7 @@ In order to use this script, type the following commands into the terminal:
 
 `$ chmod +x e-z.sh`
 
-Finally, using your favourite text editor, replace `'{YOUR-API-KEY}'` in the fourth line of
+Finally, using your favourite text editor, replace `'{YOUR-API-KEY}'` in
 `e-z.sh` with your e-z host api key, as demonstrated below:
 
 ## Go to Account Settings
