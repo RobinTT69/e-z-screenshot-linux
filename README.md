@@ -1,7 +1,7 @@
 # Dependencies
-The only dependency of this script is `grim` which can be installed by
+The dependencies for this script are `grim` and `jq` which can be installed by
 
-**On Arch:** `pacman -S grim`
+**On Arch:** `pacman -S grim jq`
 
 # Usage
 
