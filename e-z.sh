@@ -3,7 +3,7 @@
 APIKEY="null"
 
 if [ "$APIKEY" = "null" ]; then
-  echo "Please replace the 'APIKEY' variable with your API key as demonstrated in the git repo's readme."
+  notify-send "Please replace the 'APIKEY' variable with your API key as demonstrated in the git repo's readme."
   exit 0
 fi
 
