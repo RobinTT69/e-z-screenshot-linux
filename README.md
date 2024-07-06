@@ -31,6 +31,18 @@ Finally, using your favourite text editor, replace `'{YOUR-API-KEY}'` in
 
 Now paste that API key into the script and you should be good to go. 
 
+# Bind script to keyboard shortcut on Hyprland
+
+If you plan on using this on Hyprland, and want to bind it to a keyboard shortcut do the following:
+
+## Open up hyprland.conf 
+
+Open up `~/.config/hypr/hyprland.conf` with your favourite text editor.
+
+## Add the bind
+
+Add `bind = ,code:82, exec, sh ~/PATH-TO-SCRIPT &` to the file. Replace the `,code:82` with your desired [key](https://wiki.hyprland.org/Configuring/Binds/), and make sure to specify the path to script.
+
 # Disclaimer
 
 This script was designed with wayland in mind, so if you are running x11, look into using the flameshot alternative for this made by [SKRRRTT](https://github.com/ignSKRRRTT/e-z-flameshot-script).
