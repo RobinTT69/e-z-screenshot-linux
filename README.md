@@ -8,6 +8,8 @@ The dependencies for this script are `grim`, `jq` and `slurp`. To install:
 
 **On Fedora based systems** `sudo dnf install grim jq slurp`
 
+**On Gentoo systems** `sudo emerge -av gui-apps/grim gui-apps/slurp app-misc/jq`
+
 # Usage
 
 In order to use this script, type the following commands into the terminal:
