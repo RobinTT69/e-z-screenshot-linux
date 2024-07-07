@@ -40,6 +40,16 @@ Now paste that API key into the script and you should be good to go.
   
     ![image](https://i.e-z.host/fyp7qsmt.png)
 
+# Using your own custom domain? (Advanced)
+
+If you are interested in using a custom domain, but are not interested in changing nameservers to the E-Z ones, do the following: 
+
+- Download Python
+- Download the e-z.py file in this repo
+- Add your api key, and your domain that you have set up for the redirect in the NEW_BASE_URL field (example for cloudflare below)
+- Run the Script
+
+![image](https://r2.e-z.host/ca19848c-de8c-4cae-9a10-858d6fd864b7/joyc6m3h.jpeg)
 
 # Disclaimer
 
