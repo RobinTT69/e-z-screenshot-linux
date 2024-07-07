@@ -56,4 +56,4 @@ If you are interested in using a custom domain, but are not interested in changi
 This script was designed with wayland in mind, so if you are running x11, look into using the flameshot alternative for this made by [SKRRRTT](https://github.com/ignSKRRRTT/e-z-flameshot-script).
 
 # Credits 
-Credits to https://github.com/KeiranScript for helping me make this amazing readme and adding additional checks to the script.
+Credits and huge thanks to https://github.com/KeiranScript for helping me make this amazing readme and adding additional checks to the shell script, and making the python script.
