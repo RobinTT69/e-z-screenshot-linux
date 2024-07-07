@@ -23,11 +23,11 @@ In order to use this script, type the following commands into the terminal:
 Finally, using your favourite text editor, replace the `APIKEY` variable in
 `e-z.sh` with your e-z host api key, as demonstrated below:
 
-## Go to Account Settings
+- Go to Account Settings
 
 ![image](https://i.e-z.host/pics/m9j6jk3a.png)
 
-## Click 'Copy API Key'
+- Click 'Copy API Key'
 
 ![image](https://i.e-z.host/pics/inmghmtw.png)
 
