@@ -40,7 +40,7 @@ Now paste that API key into the script and you should be good to go.
   
     ![image](https://i.e-z.host/fyp7qsmt.png)
 
-# Using your own custom domain? (Advanced)
+# Using your own custom domain (For Advanced Users)
 
 If you are interested in using a custom domain, but are not interested in changing nameservers to the E-Z ones, do the following: 
 
