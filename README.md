@@ -23,11 +23,11 @@ Finally, using your favourite text editor, replace the `APIKEY` variable in
 
 ## Go to Account Settings
 
-![image](https://github.com/KeiranScript/e-z-grim/assets/159267417/284186ed-7c76-4892-aeed-c27178b6f90f)
+![image](https://i.e-z.host/pics/m9j6jk3a.png)
 
 ## Click 'Copy API Key'
 
-![image](https://github.com/KeiranScript/e-z-grim/assets/159267417/8c62ae8d-171a-4a7d-b723-2ac92d031b80)
+![image](https://i.e-z.host/pics/inmghmtw.png)
 
 Now paste that API key into the script and you should be good to go. 
 
