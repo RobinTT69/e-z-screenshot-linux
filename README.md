@@ -18,9 +18,7 @@ In order to use this script, type the following commands into the terminal:
 
 `$ cd e-z-screenshot-grim-linux`
 
-`$ chmod +x e-z.sh`
-
-Finally, using your favourite text editor, replace the `APIKEY` variable in
+Then, using your favourite text editor, replace the `APIKEY` variable in
 `e-z.sh` with your e-z host api key, as demonstrated below:
 
 - Go to Account Settings
