@@ -8,6 +8,28 @@ import argparse
 
 CONFIG_FILE = os.path.expanduser('~/.screenshot_config.json')
 
+def get_config_path():
+    home = os.path.expanduser("~")
+    config_dir = os.path.join(home, '.config', 'e-zshot')
+    config_file = os.path.join(config_dir, 'config.json')
+    return config_file
+
+def ensure_config_file_exists(config_file):
+    try:
+        # Create the directory if it doesn't exist
+        os.makedirs(os.path.dirname(config_file), exist_ok=True)
+        
+        # Check if the config file exists
+        if not os.path.exists(config_file):
+            # Create an empty config file with default settings
+            with open(config_file, 'w') as f:
+                json.dump({}, f)  # Initialize with an empty JSON object
+            print(f"Config file created at: {config_file}")
+        else:
+            print(f"Config file already exists at: {config_file}")
+    except Exception as e:
+        print(f"Error creating config file: {e}")
+
 def load_config():
     if os.path.exists(CONFIG_FILE):
         with open(CONFIG_FILE, 'r') as f:
@@ -82,6 +104,8 @@ def upload_screenshot(data, api_key):
         exit(1)
 
 def main():
+    config_path = get_config_path()
+    ensure_config_file_exists(config_path)
     config = load_config()
 
     parser = argparse.ArgumentParser(description="Screenshot tool that uploads to an external server.")
