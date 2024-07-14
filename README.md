@@ -46,12 +46,24 @@ If you are interested in using a custom domain, but are not interested in changi
 
 - Download Python
 - Download the e-z.py file in this repo
-- Run the Script
-- Follow Prompts
+- Run the Script with the arguements -A and -D. Right after -A but your api key and after -D put the domain. You only have to do this on the first time you run the script as the script saves the config to your disk.
 ### Make Sure To Type The Domain In The https://sub.domain.tld/ Format!
 
 ## Domain Setup On Cloudflare (enter this subdomain that you have set up when the script asks for it)
 ![image](https://r2.e-z.host/ca19848c-de8c-4cae-9a10-858d6fd864b7/joyc6m3h.jpeg)
+
+You have to also make a dns record
+
+![image](https://White-cops.will-shoot-you-on.site/pics/f5jrvtyn.png)
+
+Make sure its the subdomain you want, as well as making it point to 192.0.0.2
+
+### Troubleshooting
+- **The python script doesnt work! It doesnt embed the images!** (Python script)
+To fix this go back to the cloudflare rule you made. Tick the box that says "Preserve query string". Also, purge all cache if you have any. Now try the embed.
+
+- **I need to change my domain! I need to change my api key!** (Python script)
+Run the script and this time add the -A and -D arguements, just like you did the first time you used the script.
 
 # Disclaimer
 
