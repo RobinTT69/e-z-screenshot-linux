@@ -10,6 +10,8 @@ The dependencies for this script are `grim`, `jq` and `slurp`. To install:
 
 **On Gentoo systems** `sudo emerge -av gui-apps/grim gui-apps/slurp app-misc/jq`
 
+**On Windows systems** `Install Linux`
+
 # Usage
 
 In order to use this script, enter the following commands into the terminal:
