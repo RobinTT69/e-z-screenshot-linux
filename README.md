@@ -59,10 +59,10 @@ You have to also make a dns record
 Make sure its the subdomain you want, as well as making it point to 192.0.0.2
 
 ### Troubleshooting
-- **The python script doesnt work! It doesnt embed the images!** (Python script)
+- **The python script doesnt work! It doesnt embed the images!** 
 To fix this go back to the cloudflare rule you made. Tick the box that says "Preserve query string". Also, purge all cache if you have any. Now try the embed.
 
-- **I need to change my domain! I need to change my api key!** (Python script)
+- **I need to change my domain! I need to change my api key!**
 Run the script and this time add the -A and -D arguements, just like you did the first time you used the script.
 
 # Disclaimer
