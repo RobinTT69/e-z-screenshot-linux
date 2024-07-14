@@ -49,14 +49,14 @@ If you are interested in using a custom domain, but are not interested in changi
 - Run the Script with the arguements -A and -D. Right after -A but your api key and after -D put the domain. You only have to do this on the first time you run the script as the script saves the config to your disk.
 ### Make Sure To Type The Domain In The https://sub.domain.tld/ Format!
 
-## Domain Setup On Cloudflare (enter this subdomain that you have set up when the script asks for it)
+## Domain Setup On Cloudflare 
 ![image](https://r2.e-z.host/ca19848c-de8c-4cae-9a10-858d6fd864b7/joyc6m3h.jpeg)
 
 You have to also make a dns record
 
 ![image](https://r2.e-z.host/8a13052f-8c12-4034-b99f-0155cc616583/f5jrvtyn.png)
 
-Make sure its the subdomain you want, as well as making it point to 192.0.0.2
+Make sure its the subdomain you want, as well as making it point to 192.0.0.2. It also **HAS** to be proxied.
 
 ### Troubleshooting
 - **The python script doesnt work! It doesnt embed the images!** 
