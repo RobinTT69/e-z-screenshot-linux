@@ -54,7 +54,7 @@ If you are interested in using a custom domain, but are not interested in changi
 
 You have to also make a dns record
 
-![image]([https://White-cops.will-shoot-you-on.site/pics/f5jrvtyn.png](https://r2.e-z.host/8a13052f-8c12-4034-b99f-0155cc616583/f5jrvtyn.png))
+![image](https://r2.e-z.host/8a13052f-8c12-4034-b99f-0155cc616583/f5jrvtyn.png)
 
 Make sure its the subdomain you want, as well as making it point to 192.0.0.2
 
