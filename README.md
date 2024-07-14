@@ -48,6 +48,7 @@ If you are interested in using a custom domain, but are not interested in changi
 - Download the e-z.py file in this repo
 - Run the Script
 - Follow Prompts
+### Make Sure To Type The Domain In The https://sub.domain.tld/ Format!
 
 ## Domain Setup On Cloudflare (enter this subdomain that you have set up when the script asks for it)
 ![image](https://r2.e-z.host/ca19848c-de8c-4cae-9a10-858d6fd864b7/joyc6m3h.jpeg)
