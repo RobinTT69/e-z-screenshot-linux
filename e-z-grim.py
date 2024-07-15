@@ -29,7 +29,7 @@ def ensure_config_file_exists(config_file, verbose):
     try:
         # Create the directory if it doesn't exist
         os.makedirs(os.path.dirname(config_file), exist_ok=True)
-        
+
         # Check if the config file exists
         if not os.path.exists(config_file):
             # Create an empty config file with default settings
@@ -84,19 +84,19 @@ def save_to_disk(directory, file_name, data):
 def take_screenshot(full_screen, verbose):
     try:
         if full_screen:
-            # Take full screen screenshot using grim
-            grim_result = subprocess.run(['grim', '-t', 'jpeg', '-'], capture_output=True, check=True)
+            # Take full screen screenshot using grim with higher quality
+            grim_result = subprocess.run(['grim', '-t', 'jpeg', '-q', '100', '-'], capture_output=True, check=True)
         else:
             # Get the selected area using slurp
             slurp_result = subprocess.run(['slurp'], capture_output=True, text=True, check=True)
             geometry = slurp_result.stdout.strip()
-            
+
             if not geometry:
                 raise ValueError("No area selected")
 
-            # Take the screenshot using grim
-            grim_result = subprocess.run(['grim', '-g', geometry, '-t', 'jpeg', '-'], capture_output=True, check=True)
-        
+            # Take the screenshot using grim with higher quality and specified geometry
+            grim_result = subprocess.run(['grim', '-g', geometry, '-t', 'jpeg', '-q', '95', '-'], capture_output=True, check=True)
+
         if verbose:
             print(f"Screenshots taken successfully.")
         return grim_result.stdout
@@ -134,7 +134,7 @@ def upload_screenshot(data, api_key, verbose):
 def main():
     check_wayland()
     config_path = get_config_path()
-    
+
     parser = argparse.ArgumentParser(description="Screenshot tool that uploads to an external server.")
     parser.add_argument('-a', '--api-key', type=str, help="Enter API key")
     parser.add_argument('-d', '--domain', type=str, help="Enter the domain to be used")
@@ -145,7 +145,7 @@ def main():
     args = parser.parse_args()
 
     verbose = args.verbose
-    
+
     ensure_config_file_exists(config_path, verbose)
     config = load_config()
 
