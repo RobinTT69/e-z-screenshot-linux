@@ -108,7 +108,7 @@ It also **HAS** to be proxied.
 To fix this go back to the cloudflare rule you made. Tick the box that says "Preserve query string". Also, purge all cache if you have any. Now try the embed.
 
 - **I need to change my domain! I need to change my api key!**
-Run the script and this time add the -A and -D arguements, just like you did the first time you used the script.
+Run the script and this time add the -a and -d arguements, just like you did the first time you used the script.
 
 # Disclaimer
 
