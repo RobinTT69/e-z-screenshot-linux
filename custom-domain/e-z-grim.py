@@ -1,5 +1,4 @@
 #!/usr/bin/python3
-
 import subprocess
 import requests
 import json
@@ -62,11 +61,15 @@ def enter_api_key(api_key, config):
     save_config(config)
 
 def enter_domain(domain, config):
-    if not domain.startswith("https://"):
-        print("Invalid domain. Please provide a valid domain starting with 'https://'.")
-        exit(1)
-    config['domain'] = domain
-    save_config(config)
+    if domain:
+        if not domain.startswith("https://"):
+            print("Invalid domain. Please provide a valid domain starting with 'https://'.")
+            exit(1)
+        config['domain'] = domain
+        save_config(config)
+    else:
+        config['domain'] = "https://i.e-z.host/"
+        save_config(config)
 
 def save_to_disk(directory, file_name, data):
     try:
@@ -160,15 +163,11 @@ def main():
         subprocess.run(['notify-send', "Please provide an API key using the '-A' option."])
         exit(1)
 
+    # Set the domain URL
     if domain:
         NEW_BASE_URL = domain
     else:
-        NEW_BASE_URL = "null"
-
-    if NEW_BASE_URL == "null":
-        print("Please replace the 'NEW_BASE_URL' variable with your domain as demonstrated in the git repo's readme.")
-        subprocess.run(['notify-send', "Please replace the 'NEW_BASE_URL' variable with your domain as demonstrated in the git repo's readme."])
-        exit(1)
+        NEW_BASE_URL = "https://i.e-z.host/"
 
     screenshot_data = take_screenshot(args.full_screen, verbose)
 
