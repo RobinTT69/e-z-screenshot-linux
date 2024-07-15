@@ -27,14 +27,10 @@ def get_config_path():
 
 def ensure_config_file_exists(config_file, verbose):
     try:
-        # Create the directory if it doesn't exist
         os.makedirs(os.path.dirname(config_file), exist_ok=True)
-
-        # Check if the config file exists
         if not os.path.exists(config_file):
-            # Create an empty config file with default settings
             with open(config_file, 'w') as f:
-                json.dump({}, f)  # Initialize with an empty JSON object
+                json.dump({}, f)
             if verbose:
                 print(f"Config file created at: {config_file}")
         else:
@@ -54,7 +50,7 @@ def save_config(config):
         json.dump(config, f)
 
 def enter_api_key(api_key, config):
-    if not api_key or len(api_key) < 10:  # Basic validation for API key length
+    if not api_key or len(api_key) < 10:
         print("Invalid API key. Please provide a valid API key.")
         exit(1)
     config['api_key'] = api_key
@@ -73,7 +69,7 @@ def enter_domain(domain, config):
 
 def save_to_disk(directory, file_name, data):
     try:
-        file_path = os.path.join(directory, f"{file_name}")  # Append .jpeg here
+        file_path = os.path.join(directory, f"{file_name}")
         with open(file_path, 'wb') as file:
             file.write(data)
         print(f"Screenshot saved to {file_path}")
@@ -84,18 +80,15 @@ def save_to_disk(directory, file_name, data):
 def take_screenshot(full_screen, verbose):
     try:
         if full_screen:
-            # Take full screen screenshot using grim with higher quality
-            grim_result = subprocess.run(['grim', '-t', 'jpeg', '-q', '100', '-'], capture_output=True, check=True)
+            grim_result = subprocess.run(['grim', '-t', 'png', '-l', '0', '-'], capture_output=True, check=True)
         else:
-            # Get the selected area using slurp
             slurp_result = subprocess.run(['slurp'], capture_output=True, text=True, check=True)
             geometry = slurp_result.stdout.strip()
 
             if not geometry:
                 raise ValueError("No area selected")
 
-            # Take the screenshot using grim with higher quality and specified geometry
-            grim_result = subprocess.run(['grim', '-g', geometry, '-t', 'jpeg', '-q', '95', '-'], capture_output=True, check=True)
+            grim_result = subprocess.run(['grim', '-g', geometry, '-t', 'png', '-l', '0', '-'], capture_output=True, check=True)
 
         if verbose:
             print(f"Screenshots taken successfully.")
@@ -114,8 +107,8 @@ def upload_screenshot(data, api_key, verbose):
         response = requests.post(
             "https://api.e-z.host/files",
             headers={"key": api_key},
-            files={"file": ("screenshot.jpeg", data, "image/jpeg")},
-            timeout=10  # Set a timeout for the request
+            files={"file": ("screenshot.png", data, "image/png")},
+            timeout=10
         )
         response.raise_for_status()
         response_json = response.json()
@@ -163,7 +156,6 @@ def main():
         subprocess.run(['notify-send', "Please provide an API key using the '-A' option."])
         exit(1)
 
-    # Set the domain URL
     if domain:
         NEW_BASE_URL = domain
     else:
@@ -171,7 +163,6 @@ def main():
 
     screenshot_data = take_screenshot(args.full_screen, verbose)
 
-    # Log API key and domain for debugging if verbose is enabled
     if verbose:
         print(f"API Key: {api_key}")
         print(f"Domain: {NEW_BASE_URL}")
@@ -183,12 +174,11 @@ def main():
         subprocess.run(['notify-send', "Error", "Image URL is empty or null."])
         exit(1)
 
-    # Extract unique ID from the URL
     unique_id = imageUrl.split('/')[-1]
 
     if args.save_dir:
         if os.path.isdir(args.save_dir) and os.access(args.save_dir, os.W_OK):
-            save_to_disk(args.save_dir, f"{unique_id}", screenshot_data)  # Save without additional .jpeg
+            save_to_disk(args.save_dir, f"{unique_id}", screenshot_data)
         else:
             print("Invalid directory or permission denied.")
             exit(1)
