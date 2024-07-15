@@ -82,8 +82,8 @@ Make sure its the subdomain you want, as well as making it point to any valid lo
 
 It also **HAS** to be proxied.
 
-- ### Step 2: Add Domain As Argument
-Now go back to the directory where your script is and do ./SCRIPT-NAME.py -d https://sub.domain.tld/
+- ### Step 2: Add Domain With Script Argument
+Now go back to the directory where your script is and do ./SCRIPT-NAME.py -d https://cdn.yourdomain.com/
 
 # Troubleshooting
 - **The python script doesnt work! It doesnt embed the images!** 
