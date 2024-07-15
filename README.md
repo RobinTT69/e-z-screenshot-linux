@@ -84,16 +84,12 @@ It also **HAS** to be proxied.
 
 - Now go back to the directory where your script is and do ./SCRIPT-NAME.py -d https://sub.domain.tld/
 
-### Troubleshooting
+# Troubleshooting
 - **The python script doesnt work! It doesnt embed the images!** 
 To fix this go back to the cloudflare rule you made. Tick the box that says "Preserve query string". Also, purge all cache if you have any. Now try the embed.
 
 - **I need to change my domain! I need to change my api key!**
 Run the script and this time add the -a and -d arguements, just like you did the first time you used the script.
-
-# Disclaimer
-
-This script was designed with wayland in mind, so if you are running x11, look into using the flameshot alternative for this made by [SKRRRTT](https://github.com/ignSKRRRTT/e-z-flameshot-script).
 
 # Credits
 Credits and huge thanks to https://github.com/KeiranScript for being a contributor who helps me maintain this project as well as adding the python script for the custom domain option.
