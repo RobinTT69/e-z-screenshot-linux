@@ -47,22 +47,14 @@ git clone https://github.com/RobinTT69/e-z-screenshot-linux
 cd e-z-screenshot-grim-linux
 ```
 
-**e-z.py**
-```bash
-./e-z.py [OPTIONS]
-```
-
-**Alternatively**
-```bash
-python e-z.py [OPTIONS]
-```
+**Choose the file that correlates to your application. If you are using x11 use the one that has x11 in the name, if you are using wayland, and want to use flameshot, use the one thats called e-z-flameshot.py, and if you do not want to use flameshot and are on wayland, use the e-z-grim.py file! It comes with great support across desktop environments and window managers like Hyprland.**
 
 **OPTIONS:**
-- -a, --api-key: Enter API key | Only required once unless you wish to update it, the same goes for the option directly below.
-- -d, --domain: Enter the domain to be used (if unsure, enter `https://i.e-z.gg/`
+- -a, --api-key: Enter API key | Only required once unless you wish to update it
+- -d, --domain: Enter the domain to be used (check below for setup, if this does not apply to you dont incude this)
 - -s, --save-dir: Directory to save the screenshot
-- -f, --full-screen: Capture full screen instead of a selected area
-- -v, --verbose: Enable verbose logging for debugging
+- -f, --full-screen: Capture full screen instead of a selected area (does not work in x11 script)
+- -v, --verbose: Enable verbose logging for debugging (does not work in x11 script)
 
 # Locating your API key
 
@@ -74,23 +66,11 @@ python e-z.py [OPTIONS]
 
 ![image](https://i.e-z.host/pics/inmghmtw.png)
 
-Now paste that API key into the script and you should be good to go. 
-
-## **If you plan on using this on Hyprland, and want to bind it to a keyboard shortcut do the following:**
-
-  - Open up `~/.config/hypr/hyprland.conf` with your favourite text editor.
-  - Add `bind = ,code:82, exec, sh ~/PATH-TO-SCRIPT &` to the file. Replace the `,code:82` with your desired [key](https://wiki.hyprland.org/Configuring/Binds/), and make sure to specify the path to script.
-  
-    ![image](https://i.e-z.host/fyp7qsmt.png)
-
-# Using your own custom domain (For Advanced Users)
+# Using your own custom domain
 
 If you are interested in using a custom domain, but are not interested in changing nameservers to the E-Z ones, do the following: 
 
-- Download Python
-- Download the e-z.py file in this repo
-- Run the Script with the arguements -A and -D. Right after -A but your api key and after -D put the domain. You only have to do this on the first time you run the script as the script saves the config to your disk.
-### Make Sure To Type The Domain In The https://sub.domain.tld/ Format!
+### Make Sure To Type The Domain In The https://sub.domain.tld/ Format When Using The -d Flag!
 
 ## Domain Setup On Cloudflare 
 ![image](https://r2.e-z.host/ca19848c-de8c-4cae-9a10-858d6fd864b7/joyc6m3h.jpeg)
@@ -102,6 +82,8 @@ You have to also make a dns record
 Make sure its the subdomain you want, as well as making it point to any valid local IPv4 address (for example purposes, we used 192.0.0.2). 
 
 It also **HAS** to be proxied.
+
+- Now go back to the directory where your script is and do ./SCRIPT-NAME.py -d https://sub.domain.tld/
 
 ### Troubleshooting
 - **The python script doesnt work! It doesnt embed the images!** 
