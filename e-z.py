@@ -6,7 +6,7 @@ import json
 import os
 import argparse
 
-CONFIG_FILE = os.path.expanduser('~/.screenshot_config.json')
+CONFIG_FILE = os.path.expanduser('~/.config/e-zshot/config.json')
 
 def get_config_path():
     home = os.path.expanduser("~")
