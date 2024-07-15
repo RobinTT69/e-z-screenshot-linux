@@ -81,9 +81,13 @@ def save_to_disk(directory, file_name, data):
 
 def take_screenshot_and_upload(api_key, config, args):
     try:
-        # Take screenshot using Flameshot
+        # Determine screenshot command based on fullscreen flag
+        if args.fullscreen:
+            subprocess.run(['flameshot', 'full', '-p', '/tmp/screenshot.png'], check=True)
+        else:
+            subprocess.run(['flameshot', 'gui', '-r', '-p', '/tmp/screenshot.png'], check=True)
+
         temp_file = "/tmp/screenshot.png"
-        subprocess.run(['flameshot', 'gui', '-r', '-p', temp_file], check=True)
 
         # Check if the file is a valid image
         if subprocess.run(['file', '--mime-type', '-b', temp_file], capture_output=True, text=True).stdout.strip() != "image/png":
@@ -147,10 +151,11 @@ def main():
     config = load_config()
 
     parser = argparse.ArgumentParser(description="Screenshot tool that uploads to an external server.")
-    parser.add_argument('-A', '--api-key', type=str, help="Enter API key")
-    parser.add_argument('-D', '--domain', type=str, help="Enter the domain to be used")
-    parser.add_argument('-S', '--save-dir', type=str, help="Directory to save screenshot")
+    parser.add_argument('-a', '--api-key', type=str, help="Enter API key")
+    parser.add_argument('-d', '--domain', type=str, help="Enter the domain to be used")
+    parser.add_argument('-s', '--save-dir', type=str, help="Directory to save screenshot")
     parser.add_argument('-v', '--verbose', action='store_true', help="Enable verbose logging for debugging")
+    parser.add_argument('-f', '--fullscreen', action='store_true', help="Capture a fullscreen screenshot")
 
     args = parser.parse_args()
 
