@@ -142,9 +142,9 @@ def main():
     config = load_config()
 
     parser = argparse.ArgumentParser(description="Screenshot tool that uploads to an external server.")
-    parser.add_argument('-A', '--api-key', type=str, help="Enter API key")
-    parser.add_argument('-D', '--domain', type=str, help="Enter the domain to be used")
-    parser.add_argument('-S', '--save-dir', type=str, help="Directory to save screenshot")
+    parser.add_argument('-a', '--api-key', type=str, help="Enter API key")
+    parser.add_argument('-d', '--domain', type=str, help="Enter the domain to be used")
+    parser.add_argument('-s', '--save-dir', type=str, help="Directory to save screenshot")
 
     args = parser.parse_args()
 
