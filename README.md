@@ -1,12 +1,35 @@
 # Dependencies
-The dependencies for this script are `grim`, `jq` and `slurp`. To install:
 
-**On Arch:** `sudo pacman -S grim jq slurp`
+- Python
+- grim - for taking screenshots
+- slurp - for selecting screen areas
+- requests - for making HTTP requests
 
-**On Debian/Ubuntu based systems** `sudo apt update` and then
-`sudo apt install grim jq slurp`
+# Install requests with pip 
+```bash
+pip install requests
+```
 
-**On Fedora based systems** `sudo dnf install grim jq slurp`
+## For other dependencies:
+
+**On Arch** 
+```bash
+sudo pacman -S grim jq slurp
+```
+
+**On Debian/Ubuntu based systems** 
+```bash
+sudo apt update \
+sudo apt install grim jq slurp
+```
+```bash
+sudo apt install grim jq slurp
+```
+
+**On Fedora based systems** 
+```bash
+sudo dnf install grim jq slurp
+```
 
 **On Gentoo systems** `sudo emerge -av gui-apps/grim gui-apps/slurp app-misc/jq`
 
@@ -16,12 +39,32 @@ The dependencies for this script are `grim`, `jq` and `slurp`. To install:
 
 In order to use this script, enter the following commands into the terminal:
 
-`$ git clone https://github.com/RobinTT69/e-z-screenshot-grim-linux`
+```bash
+git clone https://github.com/RobinTT69/e-z-screenshot-grim-linux
+```
 
-`$ cd e-z-screenshot-grim-linux`
+```bash
+cd e-z-screenshot-grim-linux
+```
 
-Then, using your favourite text editor, replace the `APIKEY` variable in
-`e-z.sh` with your e-z host api key, as demonstrated below:
+**e-z.py**
+```bash
+./e-z.py [OPTIONS]
+```
+
+**Alternatively**
+```bash
+python e-z.py [OPTIONS]
+```
+
+**OPTIONS:**
+- -a, --api-key: Enter API key | Only required once unless you wish to update it, the same goes for the option directly below.
+- -d, --domain: Enter the domain to be used (if unsure, enter `https://i.e-z.gg/`
+- -s, --save-dir: Directory to save the screenshot
+- -f, --full-screen: Capture full screen instead of a selected area
+- -v, --verbose: Enable verbose logging for debugging
+
+# Locating your API key
 
 - Go to Account Settings
 
@@ -56,7 +99,9 @@ You have to also make a dns record
 
 ![image](https://r2.e-z.host/8a13052f-8c12-4034-b99f-0155cc616583/f5jrvtyn.png)
 
-Make sure its the subdomain you want, as well as making it point to 192.0.0.2. It also **HAS** to be proxied.
+Make sure its the subdomain you want, as well as making it point to any valid local IPv4 address (for example purposes, we used 192.0.0.2). 
+
+It also **HAS** to be proxied.
 
 ### Troubleshooting
 - **The python script doesnt work! It doesnt embed the images!** 
