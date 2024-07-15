@@ -4,6 +4,7 @@ import requests
 import json
 import os
 import argparse
+import sys
 
 CONFIG_FILE = os.path.expanduser('~/.config/e-zshot/config.json')
 
@@ -28,6 +29,17 @@ def ensure_config_file_exists(config_file):
             print(f"Config file already exists at: {config_file}")
     except Exception as e:
         print(f"Error creating config file: {e}")
+
+def check_wayland():
+    try:
+        display_server = os.environ.get('XDG_SESSION_TYPE')
+        if display_server != 'wayland':
+            print("Warning: This script is intended to be used with Wayland. Exiting.")
+            subprocess.run(['notify-send', "Warning", "This script is intended to be used with Wayland. Exiting."])
+            sys.exit(1)
+    except Exception as e:
+        print(f"Error checking desktop environment: {e}")
+        sys.exit(1)
 
 def load_config():
     if os.path.exists(CONFIG_FILE):
@@ -124,6 +136,8 @@ def send_notification(title, message):
     subprocess.run(['notify-send', title, message])
 
 def main():
+    check_wayland()  # Check for Wayland session
+
     config_path = get_config_path()
     ensure_config_file_exists(config_path)
     config = load_config()
@@ -132,6 +146,7 @@ def main():
     parser.add_argument('-A', '--api-key', type=str, help="Enter API key")
     parser.add_argument('-D', '--domain', type=str, help="Enter the domain to be used")
     parser.add_argument('-S', '--save-dir', type=str, help="Directory to save screenshot")
+    parser.add_argument('-v', '--verbose', action='store_true', help="Enable verbose logging for debugging")
 
     args = parser.parse_args()
 
