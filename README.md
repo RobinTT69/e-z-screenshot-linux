@@ -40,7 +40,7 @@ sudo dnf install grim jq slurp
 In order to use this script, enter the following commands into the terminal:
 
 ```bash
-git clone https://github.com/RobinTT69/e-z-screenshot-grim-linux
+git clone https://github.com/RobinTT69/e-z-screenshot-linux
 ```
 
 ```bash
