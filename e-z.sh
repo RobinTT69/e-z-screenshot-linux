@@ -1,6 +1,6 @@
 #!/bin/sh
 
-APIKEY="Keiran_cyrdkchl1ohewu15gi316btqxt18vt"
+APIKEY="null"
 # Check that API key exists.
 if [ "$APIKEY" = "null" ]; then
   notify-send "Please replace the 'APIKEY' variable with your API key as demonstrated in the git repo's readme."
