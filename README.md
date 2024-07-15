@@ -92,4 +92,4 @@ To fix this go back to the cloudflare rule you made. Tick the box that says "Pre
 Run the script and this time add the -a and -d arguements, just like you did the first time you used the script.
 
 # Credits
-Credits and huge thanks to https://github.com/KeiranScript for being a contributor who helps me maintain this project as well as adding the python script for the custom domain option.
+Credits and huge thanks to https://github.com/KeiranScript for being a contributor who helps me maintain this project as well as adding the  custom domain functionality in the scripts.
