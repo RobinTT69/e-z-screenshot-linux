@@ -69,7 +69,7 @@ cd e-z-screenshot-grim-linux
 
 # Using your own custom domain
 
-If you are interested in using a custom domain, but are not interested in changing nameservers to the E-Z ones, do the following: 
+One cool thing with these scripts are the fact you can just use a subdomain for the image host instead of needing to give in your whole domain, making it useless if you are using your domain for other things. None the less, heres what you do. In this example we used "cdn" but for your desired subdomain just replace "cdn" with it.
 
 ## Domain Setup On Cloudflare 
 ![image](https://r2.e-z.host/ca19848c-de8c-4cae-9a10-858d6fd864b7/joyc6m3h.jpeg)
