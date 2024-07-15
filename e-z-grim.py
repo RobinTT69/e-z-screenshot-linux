@@ -6,7 +6,7 @@ import os
 import argparse
 import sys
 
-CONFIG_FILE = os.path.expanduser('~/.screenshot_config.json')
+CONFIG_FILE = os.path.expanduser('~/.config/e-zshot/config.json')
 
 def check_wayland():
     try:
