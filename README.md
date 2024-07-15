@@ -12,7 +12,7 @@ pip install requests
 
 ## For other dependencies:
 
-**On Arch** 
+**On Arch Based Systems** 
 ```bash
 sudo pacman -S grim jq slurp
 ```
