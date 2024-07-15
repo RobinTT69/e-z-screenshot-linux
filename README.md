@@ -71,8 +71,6 @@ cd e-z-screenshot-grim-linux
 
 If you are interested in using a custom domain, but are not interested in changing nameservers to the E-Z ones, do the following: 
 
-### Make Sure To Type The Domain In The https://sub.domain.tld/ Format When Using The -d Flag!
-
 ## Domain Setup On Cloudflare 
 ![image](https://r2.e-z.host/ca19848c-de8c-4cae-9a10-858d6fd864b7/joyc6m3h.jpeg)
 
