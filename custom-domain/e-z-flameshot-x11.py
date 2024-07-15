@@ -47,11 +47,15 @@ def enter_api_key(api_key, config):
     save_config(config)
 
 def enter_domain(domain, config):
-    if not domain.startswith("https://"):
-        print("Invalid domain. Please provide a valid domain starting with 'https://'.")
-        exit(1)
-    config['domain'] = domain
-    save_config(config)
+    if domain:
+        if not domain.startswith("https://"):
+            print("Invalid domain. Please provide a valid domain starting with 'https://'.")
+            exit(1)
+        config['domain'] = domain
+        save_config(config)
+    else:
+        config['domain'] = "https://i.e-z.host/"
+        save_config(config)
 
 def save_to_disk(directory, file_name, data):
     try:
@@ -158,7 +162,7 @@ def main():
         exit(1)
 
     # Set the domain URL
-    config['domain'] = config.get('domain', "null")  # Default to "null" if domain is not set
+    config['domain'] = config.get('domain', "https://i.e-z.host/")  # Default to "https://i.e-z.host/" if domain is not set
 
     take_screenshot_and_upload(api_key, config, args)
 
