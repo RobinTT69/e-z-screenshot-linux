@@ -31,9 +31,9 @@ sudo apt install grim jq slurp
 sudo dnf install grim jq slurp
 ```
 
-**On Gentoo systems** `sudo emerge -av gui-apps/grim gui-apps/slurp app-misc/jq`
-
-**On Windows systems** `Install Linux`
+**On Gentoo systems** ```bash
+sudo emerge -av gui-apps/grim gui-apps/slurp app-misc/jq
+```
 
 # Usage
 
