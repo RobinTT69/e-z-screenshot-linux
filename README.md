@@ -71,7 +71,7 @@ cd e-z-screenshot-grim-linux
 
 One cool thing with these scripts are the fact you can just use a subdomain for the image host instead of needing to give in your whole domain, making it useless if you are using your domain for other things. None the less, heres what you do. In this example we used "cdn" but for your desired subdomain just replace "cdn" with it.
 
-## Domain Setup On Cloudflare 
+## Step 1: Domain Setup On Cloudflare 
 ![image](https://r2.e-z.host/ca19848c-de8c-4cae-9a10-858d6fd864b7/joyc6m3h.jpeg)
 
 You have to also make a dns record
@@ -82,7 +82,8 @@ Make sure its the subdomain you want, as well as making it point to any valid lo
 
 It also **HAS** to be proxied.
 
-- Now go back to the directory where your script is and do ./SCRIPT-NAME.py -d https://sub.domain.tld/
+## Step 2: Add Domain As Argument
+Now go back to the directory where your script is and do ./SCRIPT-NAME.py -d https://sub.domain.tld/
 
 # Troubleshooting
 - **The python script doesnt work! It doesnt embed the images!** 
