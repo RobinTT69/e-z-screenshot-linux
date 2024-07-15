@@ -17,11 +17,7 @@ pip install requests
 sudo pacman -S grim jq slurp
 ```
 
-**On Debian/Ubuntu based systems** 
-```bash
-sudo apt update \
-sudo apt install grim jq slurp
-```
+**On Debian/Ubuntu based systems**
 ```bash
 sudo apt install grim jq slurp
 ```
