@@ -4,6 +4,7 @@
 - grim - for taking screenshots
 - slurp - for selecting screen areas
 - requests - for making HTTP requests
+- xclip - for managing clipboard content on x11 systems
 
 # Install requests with pip 
 ```bash
@@ -14,22 +15,22 @@ pip install requests
 
 **On Arch Based Systems** 
 ```bash
-sudo pacman -S grim jq slurp
+sudo pacman -S grim jq slurp xclip
 ```
 
 **On Debian/Ubuntu based systems**
 ```bash
-sudo apt install grim jq slurp
+sudo apt install grim jq slurp xclip
 ```
 
 **On Fedora based systems** 
 ```bash
-sudo dnf install grim jq slurp
+sudo dnf install grim jq slurp xclip
 ```
 
 **On Gentoo systems**
 ```bash
-sudo emerge -av gui-apps/grim gui-apps/slurp app-misc/jq
+sudo emerge -av gui-apps/grim gui-apps/slurp app-misc/jq xclip
 ```
 
 # Usage
@@ -44,7 +45,8 @@ git clone https://github.com/RobinTT69/e-z-screenshot-linux
 cd e-z-screenshot-grim-linux
 ```
 
-**Choose the file that correlates to your use case. If you are using x11 use the one called e-z-flameshot-xll.py, if you are using wayland, and want to use flameshot, use the one thats called e-z-flameshot.py, and if you do not want to use flameshot and are on wayland, use the e-z-grim.py file! It comes with great support across desktop environments and window managers like Hyprland.**
+# **Pick the grim file if flameshot does not work on your wayland based system.**
+
 
 **OPTIONS:**
 - -a, --api-key: Enter API key | Only required once unless you wish to update it
