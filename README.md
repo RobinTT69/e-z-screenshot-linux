@@ -52,8 +52,11 @@ cd e-z-screenshot-grim-linux
 - -a, --api-key: Enter API key | Only required once unless you wish to update it
 - -d, --domain: Enter the domain to be used (check below for setup, if this does not apply to you dont incude this)
 - -s, --save-dir: Directory to save the screenshot
-- -f, --full-screen: Capture full screen instead of a selected area (does not work in x11 script, workaround is to simply select the entire area in flameshot gui)
-- -v, --verbose: Enable verbose logging for debugging (does not work in x11 script)
+- -f, --full-screen: Capture full screen instead of a selected area
+- -v, --verbose: Enable verbose logging for debugging 
+- --top-text: Text to display at the top of the screenshot
+- --bottom-text: Text to display at the bottom of the screenshot
+- --use-frame: Use a black frame around the text (only if text is provided)
 
 # Locating your API key
 
