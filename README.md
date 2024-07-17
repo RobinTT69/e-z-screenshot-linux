@@ -48,7 +48,7 @@ cd e-z-screenshot-grim-linux
 # **Pick the grim file if flameshot does not work on your wayland based system.**
 
 
-**OPTIONS:**
+# **OPTIONS:**
 - -a, --api-key: Enter API key | Only required once unless you wish to update it
 - -d, --domain: Enter the domain to be used (check below for setup, if this does not apply to you dont incude this)
 - -s, --save-dir: Directory to save the screenshot
