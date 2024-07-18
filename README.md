@@ -88,7 +88,7 @@ Set up a DNS record for your subdomain:
 
 - ### Step 2: Add Domain With Script Argument
 
-Run `./SCRIPT-NAME.py -d https://cdn.yourdomain.com/`
+Run `./e-z-variant.py -d https://sub.yourdomain.com/`
 
 # Troubleshooting
 
