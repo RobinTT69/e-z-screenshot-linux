@@ -81,7 +81,7 @@ You can use a subdomain for the image host instead of your whole domain:
 
 - ### Step 1: Domain Setup On Cloudflare 
 
-![image](https://r2.e-z.host/ca19848c-de8c-4cae-9a10-858d6fd864b7/joyc6m3h.jpeg)
+![image](https://r2.e-z.host/8a13052f-8c12-4034-b99f-0155cc616583/vbzqydsx.png)
 
 Set up a DNS record for your subdomain:
 
