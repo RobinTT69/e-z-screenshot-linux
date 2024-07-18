@@ -1,7 +1,7 @@
 # Dependencies
 
 - Python
-- flameshot - for takimg screenshots (primary screenshot tool)
+- flameshot - for taking screenshots (primary screenshot tool)
 - grim - for taking screenshots (secondary screenshot tool if flameshot is broken)
 - slurp - for selecting screen areas
 - requests - for making HTTP requests
