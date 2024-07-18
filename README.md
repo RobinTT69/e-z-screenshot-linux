@@ -48,7 +48,7 @@ Now, assuming you have installed python as mentioned earlier, you can run the sc
 chmod +x e-z-flameshot.py
 ./e-z-flameshot.py
 ```
-Or of you are using the grim script (if flameshot does not work)
+Or if you are using the grim script (if flameshot does not work)
 
 ```bash
 chmod +x e-z-grim.py
