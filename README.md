@@ -34,7 +34,7 @@ sudo dnf install grim jq slurp xclip flameshot
 sudo emerge -av gui-apps/grim gui-apps/slurp app-misc/jq xclip flameshot
 ```
 
-# Usage
+# Download
 
 To use this script, follow these steps:
 
