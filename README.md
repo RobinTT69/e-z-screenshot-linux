@@ -76,8 +76,7 @@ chmod +x e-z-grim.py
 ![image](https://i.e-z.host/pics/inmghmtw.png)
 
 # Using your own custom domain
-
-You can use a subdomain for the image host instead of your whole domain:
+Replace "cdn" with your desired subdomain:
 
 - ### Step 1: Domain Setup On Cloudflare (Redirect Rule)
 
