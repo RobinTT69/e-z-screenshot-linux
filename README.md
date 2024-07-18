@@ -79,7 +79,7 @@ chmod +x e-z-grim.py
 
 You can use a subdomain for the image host instead of your whole domain:
 
-- ### Step 1: Domain Setup On Cloudflare 
+- ### Step 1: Domain Setup On Cloudflare (Redirect Rule)
 
 ![image](https://r2.e-z.host/8a13052f-8c12-4034-b99f-0155cc616583/vbzqydsx.png)
 
