@@ -75,6 +75,13 @@ chmod +x e-z-grim.py
 
 ![image](https://i.e-z.host/pics/inmghmtw.png)
 
+Now run
+
+```bash
+./e-z-variant.py -a APIKEY
+```
+You are now done with the scripts setup! Try it out, see if it works. If you want to use your own subdomain though, follow the steps below. Otherwise, you are done!
+
 # Using your own custom domain
 Replace "cdn" with your desired subdomain:
 
