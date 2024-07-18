@@ -1,7 +1,8 @@
 # Dependencies
 
 - Python
-- grim - for taking screenshots
+- flameshot - for takimg screenshots (primary)
+- grim - for taking screenshots (if flameshot is broken)
 - slurp - for selecting screen areas
 - requests - for making HTTP requests
 - xclip - for managing clipboard content on x11 systems
@@ -15,22 +16,22 @@ pip install requests
 
 **On Arch Based Systems**
 ```bash
-sudo pacman -S grim jq slurp xclip
+sudo pacman -S grim jq slurp xclip flameshot
 ```
 
 **On Debian/Ubuntu based systems**
 ```bash
-sudo apt install grim jq slurp xclip
+sudo apt install grim jq slurp xclip flameshot
 ```
 
 **On Fedora based systems**
 ```bash
-sudo dnf install grim jq slurp xclip
+sudo dnf install grim jq slurp xclip flameshot
 ```
 
 **On Gentoo systems**
 ```bash
-sudo emerge -av gui-apps/grim gui-apps/slurp app-misc/jq xclip
+sudo emerge -av gui-apps/grim gui-apps/slurp app-misc/jq xclip flameshot
 ```
 
 # Usage
@@ -40,6 +41,18 @@ To use this script, follow these steps:
 ```bash
 git clone https://github.com/RobinTT69/e-z-screenshot-linux
 cd e-z-screenshot-linux
+```
+Now, assuming you have installed python as mentioned earlier, you can run the script by:
+
+```bash
+chmod +x e-z-flameshot.py
+./e-z-flameshot.py
+```
+Or of you are using the grim script (if flameshot does not work)
+
+```bash
+chmod +x e-z-grim.py
+./e-z-grim.py
 ```
 
 # OPTIONS:
