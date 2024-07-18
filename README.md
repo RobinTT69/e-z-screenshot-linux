@@ -1,13 +1,13 @@
 # Dependencies
 
-- Python
+- Python - for running the script
 - flameshot - for taking screenshots (primary screenshot tool)
 - grim - for taking screenshots (secondary screenshot tool if flameshot is broken)
 - slurp - for selecting screen areas
 - requests - for making HTTP requests
 - xclip - for managing clipboard content on x11 systems
 
-## Install requests with pip
+### Install requests with pip (python should be installed prior to this)
 ```bash
 pip install requests
 ```
