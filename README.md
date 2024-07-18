@@ -65,7 +65,7 @@ chmod +x e-z-grim.py
 - --bottom-text: Text to display at the bottom of the screenshot
 - --use-frame: Use a black frame around the text (only if text is provided)
 
-# Locating your API key
+# Locating your API key for the script
 
 - Go to Account Settings
 
