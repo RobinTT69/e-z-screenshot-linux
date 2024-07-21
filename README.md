@@ -1,13 +1,13 @@
 # Dependencies
+ *Note: Dependencies are automatically installed when building via the AUR*
 
 - Python - for running the script
-- flameshot - for taking screenshots (primary screenshot tool)
-- grim - for taking screenshots (secondary screenshot tool if flameshot is broken)
-- slurp - for selecting screen areas
-- requests - for making HTTP requests
+- Flameshot - for taking screenshots (primary screenshot tool)
+- Grim - for taking screenshots (secondary screenshot tool if flameshot is broken)
+- Slurp - for selecting screen areas
+- python-requests - for making HTTP requests
 - xclip - for managing clipboard content on x11 systems
-
-### Install requests with pip (python should be installed prior to this)
+#### Install requests with pip (python should be installed prior to this)
 ```bash
 pip install requests
 ```
@@ -16,7 +16,7 @@ pip install requests
 
 **On Arch Based Systems**
 ```bash
-sudo pacman -S grim jq slurp xclip flameshot
+sudo pacman -S grim jq slurp xclip flameshot python-requests
 ```
 
 **On Debian/Ubuntu based systems**
@@ -34,21 +34,56 @@ sudo dnf install grim jq slurp xclip flameshot
 sudo emerge -av gui-apps/grim gui-apps/slurp app-misc/jq xclip flameshot
 ```
 
-# Download
+# Installation
 
-To use this script, follow these steps:
+## On Arch based systems using the AUR
+
+### Paru
+```bash
+paru -S e-zshot
+```
+
+### Yay
+```bash
+yay -S e-zshot
+```
+
+### Clone with git and build manually
+```bash
+git clone https://aur.archlinux.org/e-zshot.git
+cd e-zshot
+makepkg -si
+cd ..
+rm -rf e-zshot
+```
+
+Then you can use the script by running the following commands:
+
+Using Flameshot
+```bash
+e-z-flameshot [OPTIONS]
+```
+
+Using Grim:
+```bash
+e-z-grim [OPTIONS]
+```
+
+## Using Git without makepkg
 
 ```bash
 git clone https://github.com/RobinTT69/e-z-screenshot-linux
 cd e-z-screenshot-linux
 ```
+
 Now, assuming you have installed python as mentioned earlier, you can run the script by:
 
 ```bash
 chmod +x e-z-flameshot.py
 ./e-z-flameshot.py
 ```
-Or if you are using the grim script (if flameshot does not work)
+
+Or if you are using the grim script (if Flameshot does not work)
 
 ```bash
 chmod +x e-z-grim.py
@@ -56,14 +91,16 @@ chmod +x e-z-grim.py
 ```
 
 # OPTIONS:
+- -h, --help: List all options and usage
 - -a, --api-key: Enter API key (required once, unless updating)
 - -d, --domain: Enter the domain to be used (setup required, omit if not applicable)
 - -s, --save-dir: Directory to save the screenshot
 - -f, --full-screen: Capture full screen instead of a selected area
 - -v, --verbose: Enable verbose logging for debugging 
-- --top-text: Text to display at the top of the screenshot
-- --bottom-text: Text to display at the bottom of the screenshot
-- --use-frame: Use a black frame around the text (only if text is provided)
+- -t, --top-text: Text to display at the top of the screenshot (e.g. -t 'Hello')
+- -b, --bottom-text: Text to display at the bottom of the screenshot (e.g. -b 'World!')
+- -g, --gui: Launches PyQT dialog boxes to input text
+- -c, --colour: Choose text colour (e.g. -c black)
 
 # Locating your API key for the script
 
@@ -78,7 +115,9 @@ chmod +x e-z-grim.py
 Now run
 
 ```bash
-./e-z-variant.py -a APIKEY
+./e-z-grim.py -a APIKEY
+		or
+e-z-grim -a APIKEY
 ```
 You are now done with the scripts setup! Try it out, see if it works. If you want to use your own subdomain though, follow the steps below. Otherwise, you are done!
 
@@ -95,7 +134,12 @@ Set up a DNS record for your subdomain:
 
 - ### Step 2: Add Domain With Script Argument
 
-Run `./e-z-variant.py -d https://sub.yourdomain.com/`
+Run
+```
+./e-z-grim.py -d https://sub.yourdomain.com/
+		or
+e-z-grim -d https://sub.yourdomain.com/
+```
 
 # Troubleshooting
 
