@@ -47,7 +47,7 @@ def check_wayland() -> None:
 def notify_and_exit(message: str) -> None:
     """Show a notification and exit."""
     subprocess.run(['notify-send', "Hey", message])
-    print(f"Oops: {message}")
+    print(f"Oops, {message}")
     log_message(logging.ERROR, message)
     sys.exit(1)
 
@@ -171,7 +171,7 @@ def take_screenshot(full_screen: bool, verbose: bool) -> bytes:
             print("Screenshot taken!")
         return result.stdout
     except subprocess.CalledProcessError as e:
-        notify_and_exit(f"Problem with screenshot: {e.stderr.decode().strip()}")
+        notify_and_exit(f"problem with screenshot: {e.stderr.strip()}")
     except ValueError as e:
         notify_and_exit(f"Error: {str(e)}")
 
