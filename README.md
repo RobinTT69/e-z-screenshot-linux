@@ -1,54 +1,60 @@
-# Dependencies
- *Note: Dependencies are automatically installed when building via the AUR*
 
-- Python - for running the script
-- Flameshot - for taking screenshots (primary screenshot tool)
-- Grim - for taking screenshots (secondary screenshot tool if flameshot is broken)
-- Slurp - for selecting screen areas
-- python-requests - for making HTTP requests
-- xclip - for managing clipboard content on x11 systems
-#### Install requests with pip (python should be installed prior to this)
+# e-zshot
+
+## Dependencies
+
+*Note: Dependencies are automatically installed when building via the AUR*
+
+- **Python** - for running the script
+- **Flameshot** - for taking screenshots (primary screenshot tool)
+- **Grim** - for taking screenshots (secondary screenshot tool if flameshot is broken)
+- **Slurp** - for selecting screen areas
+- **python-requests** - for making HTTP requests
+- **xclip** - for managing clipboard content on x11 systems
+
+### Install `requests` with pip
+*(Python should be installed prior to this)*
 ```bash
 pip install requests
 ```
 
 ### For other dependencies:
 
-**On Arch Based Systems**
+**On Arch Based Systems:**
 ```bash
 sudo pacman -S grim jq slurp xclip flameshot python-requests
 ```
 
-**On Debian/Ubuntu based systems**
+**On Debian/Ubuntu based systems:**
 ```bash
 sudo apt install grim jq slurp xclip flameshot
 ```
 
-**On Fedora based systems**
+**On Fedora based systems:**
 ```bash
 sudo dnf install grim jq slurp xclip flameshot
 ```
 
-**On Gentoo systems**
+**On Gentoo systems:**
 ```bash
 sudo emerge -av gui-apps/grim gui-apps/slurp app-misc/jq xclip flameshot
 ```
 
-# Installation
+## Installation
 
-## On Arch based systems using the AUR
+### On Arch based systems using the AUR
 
-### Paru
+#### Paru
 ```bash
 paru -S e-zshot
 ```
 
-### Yay
+#### Yay
 ```bash
 yay -S e-zshot
 ```
 
-### Clone with git and build manually
+#### Clone with git and build manually
 ```bash
 git clone https://aur.archlinux.org/e-zshot.git
 cd e-zshot
@@ -57,19 +63,7 @@ cd ..
 rm -rf e-zshot
 ```
 
-Then you can use the script by running the following commands:
-
-Using Flameshot
-```bash
-e-z-flameshot [OPTIONS]
-```
-
-Using Grim:
-```bash
-e-z-grim [OPTIONS]
-```
-
-## Using Git without makepkg
+### Using Git without makepkg
 
 ```bash
 git clone https://github.com/RobinTT69/e-z-screenshot-linux
@@ -77,84 +71,95 @@ cd e-z-screenshot-linux
 ```
 
 Now, assuming you have installed python as mentioned earlier, you can run the script by:
-
 ```bash
 chmod +x e-z-flameshot.py
 ./e-z-flameshot.py
 ```
 
-Or if you are using the grim script (if Flameshot does not work)
-
+Or if you are using the grim script (if Flameshot does not work):
 ```bash
 chmod +x e-z-grim.py
 ./e-z-grim.py
 ```
 
-# OPTIONS:
-- -h, --help: List all options and usage
-- -a, --api-key: Enter API key (required once, unless updating)
-- -d, --domain: Enter the domain to be used (setup required, omit if not applicable)
-- -s, --save-dir: Directory to save the screenshot
-- -f, --full-screen: Capture full screen instead of a selected area
-- -v, --verbose: Enable verbose logging for debugging 
-- -t, --top-text: Text to display at the top of the screenshot (e.g. -t 'Hello')
-- -b, --bottom-text: Text to display at the bottom of the screenshot (e.g. -b 'World!')
-- -g, --gui: Launches PyQT dialog boxes to input text
-- -c, --colour: Choose text colour (e.g. -c black)
+## Usage
 
-# Locating your API key for the script
+### Using Flameshot:
+```bash
+e-z-flameshot [OPTIONS]
+```
+
+### Using Grim:
+```bash
+e-z-grim [OPTIONS]
+```
+
+## Options
+
+- `-h, --help`: List all options and usage
+- `-a, --api-key`: Enter API key (required once, unless updating)
+- `-d, --domain`: Enter the domain to be used (setup required, omit if not applicable)
+- `-s, --save-dir`: Directory to save the screenshot
+- `-f, --full-screen`: Capture full screen instead of a selected area
+- `-v, --verbose`: Enable verbose logging for debugging 
+- `-t, --top-text`: Text to display at the top of the screenshot (e.g. `-t 'Hello'`)
+- `-b, --bottom-text`: Text to display at the bottom of the screenshot (e.g. `-b 'World!'`)
+- `-g, --gui`: Launches PyQT dialog boxes to input text
+- `-c, --colour`: Choose text colour (e.g. `-c black`)
+
+## Locating your API key for the script
 
 - Go to Account Settings
 
-![image](https://i.e-z.host/pics/m9j6jk3a.png)
+![Account Settings](https://i.e-z.host/pics/m9j6jk3a.png)
 
 - Click 'Copy API Key'
 
-![image](https://i.e-z.host/pics/inmghmtw.png)
+![Copy API Key](https://i.e-z.host/pics/inmghmtw.png)
 
-Now run
-
+Now run:
 ```bash
 ./e-z-grim.py -a APIKEY
-		or
+# or
 e-z-grim -a APIKEY
 ```
-You are now done with the scripts setup! Try it out, see if it works. If you want to use your own subdomain though, follow the steps below. Otherwise, you are done!
+You are now done with the script setup! Try it out, see if it works. If you want to use your own subdomain, follow the steps below. Otherwise, you are done!
 
-# Using your own custom domain
+## Using your own custom domain
+
 Replace "cdn" with your desired subdomain:
 
-- ### Step 1: Domain Setup On Cloudflare (Redirect Rule)
+### Step 1: Domain Setup On Cloudflare (Redirect Rule)
 
-![image](https://r2.e-z.host/8a13052f-8c12-4034-b99f-0155cc616583/vbzqydsx.png)
+![Redirect Rule](https://r2.e-z.host/8a13052f-8c12-4034-b99f-0155cc616583/vbzqydsx.png)
 
 Set up a DNS record for your subdomain:
 
-![image](https://r2.e-z.host/8a13052f-8c12-4034-b99f-0155cc616583/f5jrvtyn.png)
+![DNS Record](https://r2.e-z.host/8a13052f-8c12-4034-b99f-0155cc616583/f5jrvtyn.png)
 
-- ### Step 2: Add Domain With Script Argument
+### Step 2: Add Domain With Script Argument
 
-Run
-```
+Run:
+```bash
 ./e-z-grim.py -d https://sub.yourdomain.com/
-		or
+# or
 e-z-grim -d https://sub.yourdomain.com/
 ```
 
-# Troubleshooting
+## Troubleshooting
 
-- **The python script doesn't work! It doesn't embed the images!** 
+- **The python script doesn't work! It doesn't embed the images!**
 
-Ensure "Preserve query string" is enabled in Cloudflare and purge all caches.
+  Ensure "Preserve query string" is enabled in Cloudflare and purge all caches.
 
 - **I need to change my domain or API key!**
 
-Run the script with `-a` and `-d` arguments as you did initially.
+  Run the script with `-a` and `-d` arguments as you did initially.
 
-# Credits
+## Credits
 
 Credits to [KeiranScript](https://github.com/KeiranScript) for contributing and adding custom domain functionality.
 
-## Oliver
+### Oliver
 
 <img src="https://r2.e-z.host/oliver.png" alt="oliver" width="128" height="128">
