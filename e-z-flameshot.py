@@ -22,7 +22,7 @@ FONT_PATH = os.path.join(os.path.dirname(__file__), 'fonts', 'impact.ttf')  # Lo
 
 # Configure logging
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
-LOG_FILE = os.path.join(os.path.dirname(__file__), '.config/e-zshot/e-zshot.log')
+LOG_FILE = os.path.join(os.path.dirname(__file__), 'e-zshot.log')
 logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format=LOG_FORMAT)
 
 def get_config_path():
