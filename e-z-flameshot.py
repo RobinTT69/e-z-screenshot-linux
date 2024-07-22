@@ -48,9 +48,13 @@ def ensure_config_file_exists(config_file):
         flameshot_config_dir = os.path.expanduser('~/.config/flameshot')
         flameshot_config_file = os.path.join(flameshot_config_dir, 'flameshot.ini')
         os.makedirs(flameshot_config_dir, exist_ok=True)
-        with open(flameshot_config_file, 'a') as f:
-            f.write('\ndisabledGrimWarning=true\n')
-        logging.info(f"Added disabledGrimWarning=true to {flameshot_config_file}")
+        with open(flameshot_config_file, 'r') as f:
+            if 'disabledGrimWarning=true' not in f.read():
+                with open(flameshot_config_file, 'a') as f_append:
+                    f_append.write('\ndisabledGrimWarning=true\n')
+                logging.info(f"Added disabledGrimWarning=true to {flameshot_config_file}")
+            else:
+                logging.info(f"'disabledGrimWarning=true' already exists in {flameshot_config_file}")
 
     except Exception as e:
         logging.error(f"Error creating config file: {e}")
