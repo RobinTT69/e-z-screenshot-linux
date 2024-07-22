@@ -66,13 +66,17 @@ def load_config() -> Dict:
     """Load the config file."""
     if os.path.exists(CONFIG_FILE):
         with open(CONFIG_FILE, 'r') as f:
-            return json.load(f)
-    return {}
+            config = json.load(f)
+            # Set default values if they do not exist in the config file
+            config.setdefault('file_type', 'PNG')
+            config.setdefault('compression_level', 6)  # Default PNG compression level (0-9)
+            return config
+    return {'file_type': 'PNG', 'compression_level': 6}
 
 def save_config(config: Dict) -> None:
     """Save the config file."""
     with open(CONFIG_FILE, 'w') as f:
-        json.dump(config, f)
+        json.dump(config, f, indent=4)
 
 def enter_api_key(api_key: Optional[str], config: Dict) -> None:
     """Save the API key."""
@@ -88,8 +92,8 @@ def enter_domain(domain: Optional[str], config: Dict) -> None:
     config['domain'] = domain or "https://i.e-z.host/"
     save_config(config)
 
-def add_text_to_image(image_data: bytes, top_text: Optional[str], bottom_text: Optional[str], text_color: str) -> bytes:
-    """Add text to the image."""
+def add_text_to_image(image_data: bytes, top_text: Optional[str], bottom_text: Optional[str], text_color: str, file_type: str, compression_level: int) -> bytes:
+    """Add text to the image and return the modified image data."""
     with Image.open(io.BytesIO(image_data)).convert("RGBA") as img:
         draw = ImageDraw.Draw(img)
         img_width, img_height = img.size
@@ -127,14 +131,16 @@ def add_text_to_image(image_data: bytes, top_text: Optional[str], bottom_text: O
             draw_text(bottom_text, bottom_margin)
 
         img = img.convert("RGB")
+
         output = io.BytesIO()
-        img.save(output, format='PNG')
+        img.save(output, format='PNG', compress_level=compression_level)
+        
         return output.getvalue()
 
-def save_to_disk(directory: str, file_name: str, data: bytes) -> None:
+def save_to_disk(directory: str, file_name: str, data: bytes, file_type: str) -> None:
     """Save the file to disk."""
     try:
-        file_path = os.path.join(directory, file_name)
+        file_path = os.path.join(directory, f"{file_name}.{file_type.lower()}")
         with open(file_path, 'wb') as file:
             file.write(data)
         print(f"Saved screenshot to {file_path}")
@@ -275,6 +281,9 @@ def main():
     parser.add_argument('-c', '--colour', type=str, default='white', help="Text color")
     parser.add_argument('-g', '--gui', action='store_true', help="Use graphical text input")
 
+    parser.add_argument('-ft', '--file-type', type=str, choices=['PNG'], default='PNG', help="File type to save (PNG only)")
+    parser.add_argument('-cl', '--compression-level', type=int, default=6, help="Compression level for PNG (0-9)")
+
     args = parser.parse_args()
 
     ensure_config_file_exists(CONFIG_FILE, args.verbose)
@@ -282,6 +291,9 @@ def main():
     verbose = args.verbose
 
     config = load_config()
+    config['file_type'] = args.file_type
+    config['compression_level'] = args.compression_level
+    save_config(config)
 
     if args.api_key:
         enter_api_key(args.api_key, config)
@@ -291,6 +303,8 @@ def main():
 
     api_key = config.get('api_key')
     domain = config.get('domain')
+    file_type = config.get('file_type')
+    compression_level = config.get('compression_level')
 
     if not api_key:
         parser.print_help()
@@ -326,7 +340,7 @@ def main():
     screenshot_data = take_screenshot(args.full_screen, verbose)
     log_message(logging.INFO, "Screenshot taken.")
 
-    screenshot_data = add_text_to_image(screenshot_data, args.top_text, args.bottom_text, args.colour)
+    screenshot_data = add_text_to_image(screenshot_data, args.top_text, args.bottom_text, args.colour, file_type, compression_level)
 
     image_url = upload_screenshot(screenshot_data, api_key, verbose)
     log_message(logging.INFO, f"Image URL: {image_url}")
@@ -340,7 +354,7 @@ def main():
 
     if args.save_dir:
         if os.path.isdir(args.save_dir) and os.access(args.save_dir, os.W_OK):
-            save_to_disk(args.save_dir, f"{unique_id}.png", screenshot_data)
+            save_to_disk(args.save_dir, unique_id, screenshot_data, file_type)
         else:
             log_message(logging.ERROR, "Invalid directory or no write permissions.")
             print("Invalid directory or no write permissions.")
