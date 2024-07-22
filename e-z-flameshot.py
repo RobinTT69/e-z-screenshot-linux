@@ -22,7 +22,7 @@ FONT_PATH = os.path.join(os.path.dirname(__file__), 'fonts', 'impact.ttf')  # Lo
 
 # Configure logging
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
-LOG_FILE = os.path.join(os.path.dirname(__file__), 'e-zshot.log')
+LOG_FILE = os.path.expanduser('~/.config/e-zshot/e-zshot.log')
 logging.basicConfig(filename=LOG_FILE, level=logging.INFO, format=LOG_FORMAT)
 
 def get_config_path():
@@ -44,6 +44,14 @@ def ensure_config_file_exists(config_file):
             logging.info(f"Config file created at: {config_file}")
         else:
             logging.info(f"Config file already exists at: {config_file}")
+
+        flameshot_config_dir = os.path.expanduser('~/.config/flameshot')
+        flameshot_config_file = os.path.join(flameshot_config_dir, 'flameshot.ini')
+        os.makedirs(flameshot_config_dir, exist_ok=True)
+        with open(flameshot_config_file, 'a') as f:
+            f.write('\ndisabledGrimWarning=true\n')
+        logging.info(f"Added disabledGrimWarning=true to {flameshot_config_file}")
+
     except Exception as e:
         logging.error(f"Error creating config file: {e}")
 
@@ -171,9 +179,9 @@ class TextInputDialog(QDialog):
 def take_screenshot_and_upload(api_key, config, args):
     try:
         if args.fullscreen:
-            subprocess.run(['flameshot', 'full', '-p', '/tmp/screenshot.png'], check=True)
+            subprocess.run(['flameshot', 'full', '-p', '/tmp/screenshot.png'], check=True, stdout=subprocess.DEVNULL)
         else:
-            subprocess.run(['flameshot', 'gui', '-r', '-p', '/tmp/screenshot.png'], check=True)
+            subprocess.run(['flameshot', 'gui', '-r', '-p', '/tmp/screenshot.png'], check=True, stdout=subprocess.DEVNULL)
 
         # Process the screenshot with text and frame
         temp_file = "/tmp/screenshot.png"
