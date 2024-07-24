@@ -4,7 +4,7 @@ CONFIG_DIR="$HOME/.config/e-zshot"
 CONFIG_FILE="$CONFIG_DIR/config.json"
 DEFAULT_DOMAIN="https://i.e-z.host/"
 DEFAULT_IMAGE_TYPE="png"
-DEFAULT_COMPRESSION_LEVEL=6
+DEFAULT_COMPRESSION_LEVEL=0
 DEFAULT_SCREENSHOT_TOOL="flameshot"
 
 # Function to prompt user for input with a default value

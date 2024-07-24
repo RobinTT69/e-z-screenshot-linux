@@ -12,6 +12,7 @@ import logging
 import argparse
 
 CONFIG_FILE = os.path.expanduser('~/.config/e-zshot/config.json')
+UPLOAD_URL = "https://api.e-z.host/files"
 
 # Configure logging
 def configure_logging(verbose: bool) -> None:
@@ -40,14 +41,41 @@ def load_config() -> dict:
 
     return config
 
+def detect_environment() -> str:
+    """Detect the display server environment (X11 or Wayland)."""
+    wayland_env_vars = ['WAYLAND_DISPLAY', 'XDG_SESSION_TYPE']
+    x11_env_vars = ['DISPLAY']
+
+    # Check if Wayland environment variables are set
+    if any(var in os.environ for var in wayland_env_vars):
+        if 'WAYLAND_DISPLAY' in os.environ and os.environ['WAYLAND_DISPLAY']:
+            logging.debug("Detected Wayland environment by WAYLAND_DISPLAY.")
+            return 'wayland'
+        if 'XDG_SESSION_TYPE' in os.environ and os.environ['XDG_SESSION_TYPE'] == 'wayland':
+            logging.debug("Detected Wayland environment by XDG_SESSION_TYPE.")
+            return 'wayland'
+    
+    # Check if X11 environment variables are set
+    if any(var in os.environ for var in x11_env_vars):
+        logging.debug("Detected X11 environment by DISPLAY.")
+        return 'x11'
+    
+    # Default to X11 if no environment variables indicate Wayland
+    logging.debug("Defaulting to X11 environment.")
+    return 'x11'
+
 def take_screenshot(full_screen: bool) -> bytes:
     """Take a screenshot and return it as bytes."""
     try:
+        env = detect_environment()
         if full_screen:
-            command = ['grim', '-t', 'png', '-l', '0', '-']
+            command = ['grim', '-t', 'png', '-l', '0', '-'] if env == 'wayland' else ['grim', '-t', 'png', '-']
+            logging.debug(f"Taking full-screen screenshot using {'grim for Wayland' if env == 'wayland' else 'grim for X11'}.")
         else:
-            slurp_result = subprocess.run(['slurp'], capture_output=True, text=True, check=True)
-            geometry = slurp_result.stdout.strip()
+            selector = 'slurp' if env == 'wayland' else 'slop'
+            logging.debug(f"Using {'slurp' if env == 'wayland' else 'slop'} for selecting screenshot area.")
+            slop_result = subprocess.run([selector], capture_output=True, text=True, check=True)
+            geometry = slop_result.stdout.strip()
             if not geometry:
                 raise ValueError("No area selected")
             command = ['grim', '-g', geometry, '-t', 'png', '-l', '0', '-']
@@ -80,7 +108,7 @@ def upload_screenshot(data: bytes, api_key: str, domain: str) -> str:
             headers = {"key": api_key}
             files = {'file': ('screenshot.png', data, 'image/png')}
             
-            response = requests.post("https://api.e-z.host/files", headers=headers, files=files, timeout=base_timeout * (attempt + 1))
+            response = requests.post(UPLOAD_URL, headers=headers, files=files, timeout=base_timeout * (attempt + 1))
             response.raise_for_status()
 
             response_json = response.json()
@@ -114,33 +142,34 @@ def mask_api_key(api_key: str) -> str:
 
 def main():
     parser = argparse.ArgumentParser(description="Screenshot tool that uploads to an external server.")
-    parser.add_argument('--full-screen', action='store_true', help="Take a full-screen screenshot")
-    parser.add_argument('--save-to-disk', action='store_true', help="Save the screenshot to disk")
-    parser.add_argument('--upload-to-api', action='store_true', help="Upload the screenshot to API")
-    parser.add_argument('--verbose', action='store_true', help="Enable verbose logging")
+    parser.add_argument('-f', '--full-screen', action='store_true', help="Take a full-screen screenshot")
+    parser.add_argument('-s', '--save-to-disk', action='store_true', help="Save the screenshot to disk")
+    parser.add_argument('-n', '--no-upload', action='store_true', help="Disable uploading the screenshot to API")
+    parser.add_argument('-v', '--verbose', action='store_true', help="Enable verbose logging")
+    parser.add_argument('-o', '--output-file', type=str, help="Specify output file name")
 
     args = parser.parse_args()
 
     full_screen = args.full_screen
     save_to_disk = args.save_to_disk
-    upload_to_api = args.upload_to_api
+    upload_to_api = not args.no_upload
     verbose = args.verbose
+    output_file = args.output_file
 
+    configure_logging(verbose)
+    
     config = load_config()
     api_key = config['api_key']
     domain = config['domain']
-    text_plugin_enabled = config.get('text_plugin_enabled', False)
     
-    configure_logging(verbose)
-
     screenshot_data = take_screenshot(full_screen)
 
     if save_to_disk:
-        # Save the screenshot to disk
-        with open('screenshot.png', 'wb') as f:
+        file_name = output_file if output_file else 'screenshot.png'
+        with open(file_name, 'wb') as f:
             f.write(screenshot_data)
-        notify("Screenshot saved to disk.")
-        print("Screenshot saved to disk.")
+        notify(f"Screenshot saved to {file_name}.")
+        print(f"Screenshot saved to {file_name}.")
     
     if upload_to_api:
         image_url = upload_screenshot(screenshot_data, api_key, domain)
