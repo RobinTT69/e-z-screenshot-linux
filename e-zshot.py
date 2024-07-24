@@ -23,10 +23,12 @@ def load_config() -> dict:
     return config
 
 def find_script(script_name: str) -> str:
-    """Find the script in the plugins directory or fallback to /usr/bin."""
+    """Find the script with .py extension or fallback to without .py."""
     # Define the paths to search for the scripts
     possible_paths = [
+        os.path.join(os.path.dirname(__file__), 'plugins', script_name + '.py'),
         os.path.join(os.path.dirname(__file__), 'plugins', script_name),
+        os.path.join('/usr/bin', script_name + '.py'),
         os.path.join('/usr/bin', script_name)
     ]
     
@@ -42,9 +44,9 @@ def main():
     
     script_name = ''
     if screenshot_tool == 'flameshot':
-        script_name = 'e-z-flameshot.py'
+        script_name = 'e-z-flameshot'
     elif screenshot_tool == 'grim':
-        script_name = 'e-z-grim.py'
+        script_name = 'e-z-grim'
     else:
         print(f"Unsupported screenshot tool: {screenshot_tool}")
         sys.exit(1)
@@ -56,8 +58,14 @@ def main():
         print(f"Script {script_name} not found.")
         sys.exit(1)
 
-    # Pass all arguments to the selected script
-    subprocess.run(['python3', script_path] + sys.argv[1:])
+    # Print debug information
+    print(f"Using script: {script_path}")
+
+    # If the script has a .py extension, run it with python3, otherwise execute it directly
+    if script_path.endswith('.py'):
+        subprocess.run(['python3', script_path] + sys.argv[1:])
+    else:
+        subprocess.run([script_path] + sys.argv[1:])
 
 if __name__ == "__main__":
     main()
