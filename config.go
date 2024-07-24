@@ -18,6 +18,7 @@ type Config struct {
 	UploadToAPI       bool   `json:"upload_to_api"`
 	Verbose           bool   `json:"verbose"`
 	TextPluginEnabled bool   `json:"text_plugin_enabled"`
+	ScreenshotTool    string `json:"screenshot_tool"`
 }
 
 // Default configuration values
@@ -25,6 +26,7 @@ const (
 	defaultDomain           = "https://cdn.kuuichi.xyz/"
 	defaultImageType        = "png"
 	defaultCompressionLevel = 6
+	defaultScreenshotTool   = "flameshot" // Default to flameshot
 )
 
 // Prompt user for input with default value
@@ -59,6 +61,18 @@ func promptBool(question string, defaultValue bool) bool {
 	}
 	input := promptUser(question+" (y/n)", defaultStr)
 	return strings.ToLower(input) == "y"
+}
+
+// Prompt user for selection input with default value
+func promptSelection(question, defaultValue, options string) string {
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Printf("%s [%s] %s: ", question, defaultValue, options)
+	input, _ := reader.ReadString('\n')
+	input = strings.TrimSpace(input)
+	if input == "" {
+		return defaultValue
+	}
+	return input
 }
 
 // Load existing configuration file
@@ -130,6 +144,7 @@ func main() {
 		config.UploadToAPI = promptBool("Upload screenshot to API", config.UploadToAPI)
 		config.Verbose = promptBool("Enable verbose mode", config.Verbose)
 		config.TextPluginEnabled = promptBool("Enable text processing plugin", config.TextPluginEnabled)
+		config.ScreenshotTool = promptSelection("Select screenshot tool (grim or flameshot)", defaultScreenshotTool, "(grim or flameshot)")
 	}
 
 	// Create config directory if it doesn't exist
