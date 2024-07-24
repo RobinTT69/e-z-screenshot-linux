@@ -25,14 +25,17 @@ def main():
     config = load_config()
     screenshot_tool = config.get('screenshot_tool', 'flameshot')
 
+    script = ''
     if screenshot_tool == 'flameshot':
-        subprocess.run(['python3', 'plugins/e-z-flameshot.py'])
+        script = 'plugins/e-z-flameshot.py'
     elif screenshot_tool == 'grim':
-        subprocess.run(['python3', 'plugins/e-z-grim.py'])
+        script = 'plugins/e-z-grim.py'
     else:
         print(f"Unsupported screenshot tool: {screenshot_tool}")
         sys.exit(1)
 
+    # Pass all arguments to the selected script
+    subprocess.run(['python3', script] + sys.argv[1:])
+
 if __name__ == "__main__":
     main()
-

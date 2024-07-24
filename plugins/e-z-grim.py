@@ -9,6 +9,7 @@ import shutil
 import json
 import os
 import logging
+import argparse
 
 CONFIG_FILE = os.path.expanduser('~/.config/e-zshot/config.json')
 
@@ -112,47 +113,27 @@ def mask_api_key(api_key: str) -> str:
     return api_key
 
 def main():
-    if len(sys.argv) > 1 and sys.argv[1] == '--full-screen':
-        full_screen = True
-    else:
-        full_screen = False
+    parser = argparse.ArgumentParser(description="Screenshot tool that uploads to an external server.")
+    parser.add_argument('--full-screen', action='store_true', help="Take a full-screen screenshot")
+    parser.add_argument('--save-to-disk', action='store_true', help="Save the screenshot to disk")
+    parser.add_argument('--upload-to-api', action='store_true', help="Upload the screenshot to API")
+    parser.add_argument('--verbose', action='store_true', help="Enable verbose logging")
+
+    args = parser.parse_args()
+
+    full_screen = args.full_screen
+    save_to_disk = args.save_to_disk
+    upload_to_api = args.upload_to_api
+    verbose = args.verbose
 
     config = load_config()
     api_key = config['api_key']
     domain = config['domain']
     text_plugin_enabled = config.get('text_plugin_enabled', False)
-    save_to_disk = config.get('save_to_disk', False)
-    upload_to_api = config.get('upload_to_api', True)
-    verbose = config.get('verbose', False)
     
     configure_logging(verbose)
 
     screenshot_data = take_screenshot(full_screen)
-
-    if text_plugin_enabled:
-        # Import and use the text_processing plugin
-        try:
-            import text_processing
-            # Get text input from the user
-            app = text_processing.initialize_gui()
-            top_text, bottom_text = text_processing.get_text_input(app)
-            text_color = config.get('text_color', 'white')
-            file_type = 'PNG'  # Fixed to PNG as per current use case
-            compression_level = config.get('compression_level', 6)
-            
-            screenshot_data = text_processing.add_text_to_image(
-                screenshot_data,
-                top_text,
-                bottom_text,
-                text_color,
-                file_type,
-                compression_level
-            )
-        except ImportError as e:
-            logging.error(f"Failed to import text processing plugin: {e}")
-            notify(f"Failed to import text processing plugin: {e}")
-            print(f"Failed to import text processing plugin: {e}")
-            sys.exit(1)
 
     if save_to_disk:
         # Save the screenshot to disk
