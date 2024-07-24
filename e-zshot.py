@@ -5,6 +5,7 @@ import os
 import subprocess
 import sys
 
+# Adjust this path based on where the configuration file is installed
 CONFIG_FILE = os.path.expanduser('~/.config/e-zshot/config.json')
 
 def load_config() -> dict:
@@ -21,21 +22,42 @@ def load_config() -> dict:
 
     return config
 
+def find_script(script_name: str) -> str:
+    """Find the script in the plugins directory or fallback to /usr/bin."""
+    # Define the paths to search for the scripts
+    possible_paths = [
+        os.path.join(os.path.dirname(__file__), 'plugins', script_name),
+        os.path.join('/usr/bin', script_name)
+    ]
+    
+    for path in possible_paths:
+        if os.path.isfile(path):
+            return path
+
+    return None
+
 def main():
     config = load_config()
     screenshot_tool = config.get('screenshot_tool', 'flameshot')
-
-    script = ''
+    
+    script_name = ''
     if screenshot_tool == 'flameshot':
-        script = 'plugins/e-z-flameshot.py'
+        script_name = 'e-z-flameshot.py'
     elif screenshot_tool == 'grim':
-        script = 'plugins/e-z-grim.py'
+        script_name = 'e-z-grim.py'
     else:
         print(f"Unsupported screenshot tool: {screenshot_tool}")
         sys.exit(1)
 
+    # Find the script
+    script_path = find_script(script_name)
+    
+    if not script_path:
+        print(f"Script {script_name} not found.")
+        sys.exit(1)
+
     # Pass all arguments to the selected script
-    subprocess.run(['python3', script] + sys.argv[1:])
+    subprocess.run(['python3', script_path] + sys.argv[1:])
 
 if __name__ == "__main__":
     main()
