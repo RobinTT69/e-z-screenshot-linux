@@ -58,9 +58,6 @@ def main():
         print(f"Script {script_name} not found.")
         sys.exit(1)
 
-    # Print debug information
-    print(f"Using script: {script_path}")
-
     # If the script has a .py extension, run it with python3, otherwise execute it directly
     if script_path.endswith('.py'):
         subprocess.run(['python3', script_path] + sys.argv[1:])
