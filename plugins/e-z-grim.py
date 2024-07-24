@@ -20,7 +20,7 @@ def configure_logging(verbose: bool) -> None:
 
 def notify(message: str) -> None:
     """Send a desktop notification."""
-    subprocess.run(['notify-send', "Screenshot Tool", message])
+    subprocess.run(['notify-send', "E-ZShot", message])
 
 def load_config() -> dict:
     """Load the configuration file."""
@@ -132,7 +132,7 @@ def main():
     if text_plugin_enabled:
         # Import and use the text_processing plugin
         try:
-            from plugins import text_processing
+            import text_processing
             # Get text input from the user
             app = text_processing.initialize_gui()
             top_text, bottom_text = text_processing.get_text_input(app)

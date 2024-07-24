@@ -26,9 +26,9 @@ def main():
     screenshot_tool = config.get('screenshot_tool', 'flameshot')
 
     if screenshot_tool == 'flameshot':
-        subprocess.run(['python3', 'e-z-flameshot.py'])
+        subprocess.run(['python3', 'plugins/e-z-flameshot.py'])
     elif screenshot_tool == 'grim':
-        subprocess.run(['python3', 'e-z-grim.py'])
+        subprocess.run(['python3', 'plugins/e-z-grim.py'])
     else:
         print(f"Unsupported screenshot tool: {screenshot_tool}")
         sys.exit(1)
