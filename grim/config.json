@@ -1,0 +1,12 @@
+{
+    "api_key": "your_api_key_here",
+    "domain": "https://i.e-z.host/",
+    "file_type": "PNG",
+    "compression_level": 6,
+    "plugin_repo_url": "https://github.com/yourusername/yourrepository/raw/main/plugins",
+    "plugins": [
+        "logging_plugin",
+        "gui_plugin",
+        "text_processing_plugin"
+    ]
+}
