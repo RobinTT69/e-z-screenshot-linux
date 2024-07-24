@@ -62,7 +62,7 @@ def get_text_input(app: QApplication) -> (str, str):
     dialog.exec_()
     return dialog.top_text, dialog.bottom_text
 
-def add_text_to_image(image_data: bytes, top_text: Optional[str], bottom_text: Optional[str], text_color: str, file_type: str, compression_level: int) -> bytes:
+def add_text_to_image(image_data: bytes, top_text: Optional[str], bottom_text: Optional[str], text_color: str, file_type: str='PNG', compression_level: int=0) -> bytes:
     """Add text to the image and return the modified image data."""
     with Image.open(io.BytesIO(image_data)).convert("RGBA") as img:
         draw = ImageDraw.Draw(img)

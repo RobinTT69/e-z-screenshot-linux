@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import subprocess
 import requests
 import sys
@@ -10,13 +12,11 @@ import logging
 
 CONFIG_FILE = os.path.expanduser('~/.config/e-zshot/config.json')
 
-def setup_logging(verbose: bool) -> None:
-    """Set up logging configuration."""
-    log_level = logging.DEBUG if verbose else logging.INFO
-    logging.basicConfig(
-        level=log_level,
-        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-    )
+# Configure logging
+def configure_logging(verbose: bool) -> None:
+    """Configure logging based on verbosity setting."""
+    logging.basicConfig(level=logging.DEBUG if verbose else logging.WARNING,
+                        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 
 def notify(message: str) -> None:
     """Send a desktop notification."""
@@ -54,13 +54,13 @@ def take_screenshot(full_screen: bool) -> bytes:
         result = subprocess.run(command, capture_output=True, check=True)
         return result.stdout
     except subprocess.CalledProcessError as e:
-        notify(f"Error taking screenshot: {e.stderr.strip()}")
         logging.error(f"Error taking screenshot: {e.stderr.strip()}")
+        notify(f"Error taking screenshot: {e.stderr.strip()}")
         print(f"Error taking screenshot: {e.stderr.strip()}")
         sys.exit(1)
     except ValueError as e:
-        notify(f"Error: {e}")
         logging.error(f"Error: {e}")
+        notify(f"Error: {e}")
         print(f"Error: {e}")
         sys.exit(1)
 
@@ -68,7 +68,6 @@ def upload_screenshot(data: bytes, api_key: str, domain: str) -> str:
     """Upload the screenshot and return the URL."""
     if not api_key or not domain:
         notify("Configuration incomplete. Please use the Go client to set up.")
-        logging.error("Configuration incomplete. Please use the Go client to set up.")
         print("Configuration incomplete. Please use the Go client to set up.")
         sys.exit(1)
     
@@ -105,6 +104,13 @@ def copy_to_clipboard(text: str) -> None:
         notify("Clipboard copy utility not found.")
         print("Clipboard copy utility not found.")
 
+def mask_api_key(api_key: str) -> str:
+    """Mask the API key, censoring characters after the underscore."""
+    parts = api_key.split('_')
+    if len(parts) > 1:
+        return parts[0] + '_' + '*' * (len(parts[1]) - 3) + parts[1][-3:]
+    return api_key
+
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == '--full-screen':
         full_screen = True
@@ -118,10 +124,8 @@ def main():
     save_to_disk = config.get('save_to_disk', False)
     upload_to_api = config.get('upload_to_api', True)
     verbose = config.get('verbose', False)
-
-    # Set up logging if enabled
-    setup_logging(verbose)
-    logging.info("Started processing...")
+    
+    configure_logging(verbose)
 
     screenshot_data = take_screenshot(full_screen)
 
@@ -144,10 +148,9 @@ def main():
                 file_type,
                 compression_level
             )
-            logging.info("Text processing completed.")
         except ImportError as e:
-            notify(f"Failed to import text processing plugin: {e}")
             logging.error(f"Failed to import text processing plugin: {e}")
+            notify(f"Failed to import text processing plugin: {e}")
             print(f"Failed to import text processing plugin: {e}")
             sys.exit(1)
 
@@ -156,24 +159,27 @@ def main():
         with open('screenshot.png', 'wb') as f:
             f.write(screenshot_data)
         notify("Screenshot saved to disk.")
-        logging.info("Screenshot saved to disk.")
+        print("Screenshot saved to disk.")
     
     if upload_to_api:
         image_url = upload_screenshot(screenshot_data, api_key, domain)
         if not image_url:
             notify("Error: Empty or null image URL.")
-            logging.error("Error: Empty or null image URL.")
             print("Error: Empty or null image URL.")
             sys.exit(1)
 
         final_url = f"{domain.rstrip('/')}/{image_url.split('/')[-1]}"
         copy_to_clipboard(final_url)
-        notify(f"Screenshot uploaded. URL: {final_url}")
-        logging.info(f"Screenshot uploaded. URL: {final_url}")
-        print(f"Screenshot URL: {final_url}")
+        masked_api_key = mask_api_key(api_key)
+        if verbose:
+            notify(f"Screenshot uploaded. URL: {final_url}")
+            print(f"Screenshot URL: {final_url} (API Key: {masked_api_key})")
+        else:
+            notify(f"Screenshot uploaded. URL: {final_url}")
+            print(f"Screenshot URL: {final_url}")
     else:
         notify("Screenshot not uploaded.")
-        logging.info("Screenshot not uploaded.")
+        print("Screenshot not uploaded.")
 
 if __name__ == "__main__":
     main()

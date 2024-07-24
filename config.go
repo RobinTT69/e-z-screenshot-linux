@@ -22,13 +22,13 @@ type Config struct {
 
 // Default configuration values
 const (
-	defaultDomain           = "https://i.e-z.host"
-	defaultImageType        = "PNG"
+	defaultDomain           = "https://cdn.kuuichi.xyz/"
+	defaultImageType        = "png"
 	defaultCompressionLevel = 6
 )
 
-// Read user input with default value and prompt
-func promptUser(question string, defaultValue string) string {
+// Prompt user for input with default value
+func promptUser(question, defaultValue string) string {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Printf("%s [%s]: ", question, defaultValue)
 	input, _ := reader.ReadString('\n')
@@ -39,7 +39,7 @@ func promptUser(question string, defaultValue string) string {
 	return input
 }
 
-// Read integer user input with default value
+// Prompt user for integer input with default value
 func promptInt(question string, defaultValue int) int {
 	defaultStr := fmt.Sprintf("%d", defaultValue)
 	input := promptUser(question, defaultStr)
@@ -51,7 +51,7 @@ func promptInt(question string, defaultValue int) int {
 	return value
 }
 
-// Read boolean user input with default value
+// Prompt user for boolean input with default value
 func promptBool(question string, defaultValue bool) bool {
 	defaultStr := "n"
 	if defaultValue {
@@ -102,7 +102,10 @@ func main() {
 			config = &Config{}
 		}
 
+		// Prompt for API key without censoring
 		config.APIKey = promptUser("Enter your API key", config.APIKey)
+
+		// Prompt for other settings
 		config.Domain = promptUser("Enter the base domain", config.Domain)
 		if config.Domain == "" {
 			config.Domain = defaultDomain
@@ -111,10 +114,18 @@ func main() {
 		if config.ImageType == "" {
 			config.ImageType = defaultImageType
 		}
-		config.CompressionLevel = promptInt("Enter PNG compression level (0-9)", config.CompressionLevel)
-		if config.CompressionLevel < 0 || config.CompressionLevel > 9 {
+
+		// Prompt for PNG compression level only if image type is PNG
+		if strings.ToLower(config.ImageType) == "png" {
+			config.CompressionLevel = promptInt("Enter PNG compression level (0-9)", config.CompressionLevel)
+			if config.CompressionLevel < 0 || config.CompressionLevel > 9 {
+				config.CompressionLevel = defaultCompressionLevel
+			}
+		} else {
+			// Ensure compression level is not set if image type is not PNG
 			config.CompressionLevel = defaultCompressionLevel
 		}
+
 		config.SaveToDisk = promptBool("Save screenshot to disk", config.SaveToDisk)
 		config.UploadToAPI = promptBool("Upload screenshot to API", config.UploadToAPI)
 		config.Verbose = promptBool("Enable verbose mode", config.Verbose)
@@ -148,5 +159,5 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println("Configuration saved successfully to:", configFile)
+	fmt.Printf("Configuration saved successfully to: %s\n", configFile)
 }
