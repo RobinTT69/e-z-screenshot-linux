@@ -13,9 +13,9 @@ import logging
 import traceback
 import time
 import random
-from PyQt5.QtWidgets import QApplication, QDialog, QLabel, QLineEdit, QVBoxLayout, QPushButton
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPixmap
+#from PyQt5.QtWidgets import QApplication, QDialog, QLabel, QLineEdit, QVBoxLayout, QPushButton
+#from PyQt5.QtCore import Qt
+#from PyQt5.QtGui import QPixmap
 
 CONFIG_FILE = os.path.expanduser('~/.config/e-zshot/config.json')
 FONT_PATH = os.path.join(os.path.dirname(__file__), 'fonts', 'impact.ttf')  # Local font path
@@ -148,37 +148,37 @@ def get_clipboard_tool():
     else:
         return 'xclip'  # X11 clipboard tool
 
-class TextInputDialog(QDialog):
-    def __init__(self, parent=None):
-        super(TextInputDialog, self).__init__(parent)
+# class TextInputDialog(QDialog):
+   # def __init__(self, parent=None):
+    #    super(TextInputDialog, self).__init__(parent)
 
-        self.top_text_edit = QLineEdit()
-        self.bottom_text_edit = QLineEdit()
-        self.top_text = None
-        self.bottom_text = None
+    #    self.top_text_edit = QLineEdit()
+     #   self.bottom_text_edit = QLineEdit()
+     #   self.top_text = None
+     #   self.bottom_text = None
 
-        self.init_ui()
+      #  self.init_ui()
 
-    def init_ui(self):
-        self.setWindowTitle("Text Input")
-        layout = QVBoxLayout()
-        layout.addWidget(QLabel("Top Text:"))
-        layout.addWidget(self.top_text_edit)
-        layout.addWidget(QLabel("Bottom Text:"))
-        layout.addWidget(self.bottom_text_edit)
+   # def init_ui(self):
+    #    self.setWindowTitle("Text Input")
+    #    layout = QVBoxLayout()
+    #    layout.addWidget(QLabel("Top Text:"))
+    #    layout.addWidget(self.top_text_edit)
+     #   layout.addWidget(QLabel("Bottom Text:"))
+     #   layout.addWidget(self.bottom_text_edit)
 
-        button = QPushButton('OK')
-        button.clicked.connect(self.on_button_click)
-        layout.addWidget(button)
+    #    button = QPushButton('OK')
+     #   button.clicked.connect(self.on_button_click)
+    #    layout.addWidget(button)
 
-        self.setLayout(layout)
-        self.setModal(True)
-        self.show()
+    #    self.setLayout(layout)
+    #    self.setModal(True)
+    #    self.show()
 
-    def on_button_click(self):
-        self.top_text = self.top_text_edit.text()
-        self.bottom_text = self.bottom_text_edit.text()
-        self.accept()
+   # def on_button_click(self):
+     #   self.top_text = self.top_text_edit.text()
+      #  self.bottom_text = self.bottom_text_edit.text()
+      #  self.accept()
 
 def take_screenshot_and_upload(api_key, config, args):
     try:
@@ -193,20 +193,20 @@ def take_screenshot_and_upload(api_key, config, args):
             screenshot_data = f.read()
 
         # Handle GUI text input
-        if args.gui:
-            app = QApplication(sys.argv)
-            dialog = TextInputDialog()
-            dialog.exec_()
-            top_text = dialog.top_text
-            bottom_text = dialog.bottom_text
-            app.quit()
+        # if args.gui:
+          #  app = QApplication(sys.argv)
+          #  dialog = TextInputDialog()
+          #  dialog.exec_()
+           # top_text = dialog.top_text
+          #  bottom_text = dialog.bottom_text
+           # app.quit()
 
-        else:
+      
             top_text = args.top_text
             bottom_text = args.bottom_text
 
         # Add text and frame to the screenshot
-        screenshot_data = add_text_to_image(screenshot_data, top_text, bottom_text, args.use_frame, args.colour)
+        screenshot_data = add_text_to_image(screenshot_data, top_text, bottom_text, args.use_frame, args.color)
 
         # Upload the screenshot using API
         url = "https://api.e-z.host/files"
@@ -237,10 +237,10 @@ def take_screenshot_and_upload(api_key, config, args):
             subprocess.run([clipboard_tool, '-sel', 'c'], input=final_url.encode(), check=True)
 
         # Save to disk if directory is specified
-        save_dir = args.save_dir
-        if save_dir:
-            if os.path.isdir(save_dir) and os.access(save_dir, os.W_OK):
-                save_to_disk(save_dir, unique_id, screenshot_data)
+        save_to_disk = args.save_to_disk
+        if save_to_disk:
+            if os.path.isdir(save_to_disk) and os.access(save_to_disk, os.W_OK):
+                save_to_disk(save_to_disk, unique_id, screenshot_data)
             else:
                 logging.error("Invalid directory or permission denied.")
                 print("Invalid directory or permission denied.")
@@ -275,24 +275,24 @@ def main():
     config = load_config()
 
     parser = argparse.ArgumentParser(description="Screenshot tool that uploads to an external server.")
-    parser.add_argument('-a', '--api-key', type=str, help="Enter API key")
-    parser.add_argument('-d', '--domain', type=str, help="Enter the domain to be used")
-    parser.add_argument('-s', '--save-dir', type=str, help="Directory to save screenshot")
+    # parser.add_argument('-a', '--api-key', type=str, help="Enter API key")
+    # arser.add_argument('-d', '--domain', type=str, help="Enter the domain to be used")
+    parser.add_argument('-s', '--save-to-disk', type=str, help="Save the screenshot to the specified path")
     parser.add_argument('-v', '--verbose', action='store_true', help="Enable verbose logging for debugging")
     parser.add_argument('-f', '--fullscreen', action='store_true', help="Capture a fullscreen screenshot")
-    parser.add_argument('-g', '--gui', action='store_true', help="Use graphical text input")
+   # parser.add_argument('-g', '--gui', action='store_true', help="Use graphical text input")
     parser.add_argument('-t','--top-text', type=str, help="Text to display at the top of the screenshot")
     parser.add_argument('-b','--bottom-text', type=str, help="Text to display at the bottom of the screenshot")
     parser.add_argument('-uf','--use-frame', action='store_true', help="Use a black frame around the text (only if text is provided)")
-    parser.add_argument('-c', '--colour', type=str, default='white', help="Text color")
+    parser.add_argument('-c', '--color', type=str, default='white', help="Text color")
 
     args = parser.parse_args()
 
-    if args.api_key:
-        enter_api_key(args.api_key, config)
+ #  if args.api_key:
+  #      enter_api_key(args.api_key, config)
 
-    if args.domain:
-        enter_domain(args.domain, config)
+ #   if args.domain:
+  #      enter_domain(args.domain, config)
 
     api_key = config.get('api_key')
 
