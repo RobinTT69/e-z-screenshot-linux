@@ -100,28 +100,23 @@ def save_to_disk(directory, file_name, data):
         print(f"Error saving screenshot: {e}")
         exit(1)
 
-def add_text_to_image(image_data, top_text=None, bottom_text=None, use_frame=False, text_color='white'):
+
+# def add_text_to_image(image_data, top_text=None, bottom_text=None, use_frame=False, text_color='white'):
+def add_text_to_image(image_data, top_text=None, bottom_text=None, text_color='white'):
     try:
         with Image.open(io.BytesIO(image_data)) as img:
             draw = ImageDraw.Draw(img)
             font = ImageFont.truetype(FONT_PATH, 40)
 
-            # Function to draw text with optional frame
             def draw_text_with_frame(text, position, is_bottom):
                 text_bbox = draw.textbbox((0, 0), text, font=font)
                 text_width = text_bbox[2] - text_bbox[0]
                 text_height = text_bbox[3] - text_bbox[1]
 
-                # Centering
                 text_x = (img.width - text_width) // 2
                 text_y = position[1]
 
-                if use_frame:
-                    frame_position = (text_x - 10, text_y - (text_height // 2) - 10, text_x + text_width + 10,
-                                      text_y + (text_height // 2) + 10)
-                    draw.rectangle(frame_position, fill="black")  # Draw black frame
-
-                draw.text((text_x, text_y - (text_height // 2)), text, font=font, fill=text_color)  # Center the text
+                draw.text((text_x, text_y - (text_height // 2)), text, font=font, fill=text_color)
 
             if top_text:
                 draw_text_with_frame(top_text, (0, 10), is_bottom=False)
@@ -206,8 +201,8 @@ def take_screenshot_and_upload(api_key, config, args):
             bottom_text = args.bottom_text
 
         # Add text and frame to the screenshot
-        screenshot_data = add_text_to_image(screenshot_data, top_text, bottom_text, args.use_frame, args.color)
-
+        # screenshot_data = add_text_to_image(screenshot_data, top_text, bottom_text, args.use_frame, args.color)
+        screenshot_data = add_text_to_image(screenshot_data, top_text, bottom_text, args.color)
         # Upload the screenshot using API
         url = "https://api.e-z.host/files"
         files = {"file": ("screenshot.png", screenshot_data, "image/png")}
@@ -283,7 +278,7 @@ def main():
    # parser.add_argument('-g', '--gui', action='store_true', help="Use graphical text input")
     parser.add_argument('-t','--top-text', type=str, help="Text to display at the top of the screenshot")
     parser.add_argument('-b','--bottom-text', type=str, help="Text to display at the bottom of the screenshot")
-    parser.add_argument('-uf','--use-frame', action='store_true', help="Use a black frame around the text (only if text is provided)")
+    # parser.add_argument('-uf','--use-frame', action='store_true', help="Use a black frame around the text (only if text is provided)")
     parser.add_argument('-c', '--color', type=str, default='white', help="Text color")
 
     args = parser.parse_args()
