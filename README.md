@@ -42,8 +42,8 @@ sudo emerge -av gui-apps/grim gui-apps/slurp app-misc/jq xclip flameshot slop
 ```
 
 ## Installation
-
-### On Arch based systems using the AUR
+<details>
+<summary>On Arch based systems using the AUR</summary>
 
 #### Paru
 ```bash
@@ -63,26 +63,44 @@ makepkg -si
 cd ..
 rm -rf e-zshot
 ```
+</details>
 
-### For non-arch distros
+<details>
+<summary>For non-arch distros</summary>
 
 ```bash
 git clone https://github.com/RobinTT69/e-z-screenshot-linux
 cd e-z-screenshot-linux
+chmod +x ./e-zconfig.sh
+chmod +x ./e-zshot.py
 ```
-COMING SOON
+</details>
 
-## Options
+## Configuration and usage
+
+**If you downloaded e-zshot from the aur, run e-zconfig and follow the onscreen prompts. Other wise:**
+
+```bash
+cd e-z-screenshot-linux
+./e-zconfig.sh
+```
+**e-zshot is now done being configured, and you can run it.** 
+
+```bash
+e-zshot
+```
+
+## Arguments
 
 - `-h, --help`: List all options and usage
-- `-s, --save-dir`: Directory to save the screenshot
+- `-s, --save-to-disk`:  Save the screenshot to the specified path
 - `-f, --full-screen`: Capture full screen instead of a selected area
 - `-v, --verbose`: Enable verbose logging for debugging 
 - `-t, --top-text`: Text to display at the top of the screenshot (e.g. `-t 'Hello'`)
 - `-b, --bottom-text`: Text to display at the bottom of the screenshot (e.g. `-b 'World!'`)
-- `-c, --colour`: Choose text colour (e.g. `-c black`)
+- `-c, --colour`: Choose text colour (e.g. `-c black` or `-c #000000`)
 
-## Locating your API key for the script
+## Locating your API key
 
 - Go to Account Settings
 
@@ -94,13 +112,12 @@ COMING SOON
 
 Now run:
 ```bash
-
+e-zconfig
 ```
-You are now done with the script setup! Try it out, see if it works. If you want to use your own subdomain, follow the steps below. Otherwise, you are done!
 
-## Using your own custom domain
+## Using your own custom domain (optional)
 
-Replace "cdn" with your desired subdomain:
+**Replace "cdn" with your desired subdomain:**
 
 ### Step 1: Domain Setup On Cloudflare (Redirect Rule)
 
@@ -110,24 +127,22 @@ Set up a DNS record for your subdomain:
 
 ![DNS Record](https://r2.e-z.host/8a13052f-8c12-4034-b99f-0155cc616583/f5jrvtyn.png)
 
-### Step 2: Add Domain With Script Argument
+### Step 2: Add Domain Using Config 
 
 Run:
 ```bash
-./e-z-grim.py -d https://sub.yourdomain.com/
-# or
-e-z-grim -d https://sub.yourdomain.com/
+e-zconfig
 ```
 
 ## Troubleshooting
 
-- **The python script doesn't work! It doesn't embed the images!**
+- **It doesn't embed the images!**
 
   Ensure "Preserve query string" is enabled in Cloudflare and purge all caches.
 
 - **I need to change my domain or API key!**
 
-  Run the script with `-a` and `-d` arguments as you did initially.
+  Run `e-zconfig` with your updated credentials or domain..
 
 ## Credits
 
