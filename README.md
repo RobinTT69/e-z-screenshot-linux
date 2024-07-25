@@ -9,6 +9,7 @@
 - **Flameshot** - for taking screenshots (primary screenshot tool)
 - **Grim** - for taking screenshots (secondary screenshot tool if flameshot is broken)
 - **Slurp** - for selecting screen areas
+- **Slop** - for selecting screen areas (x11)
 - **python-requests** - for making HTTP requests
 - **xclip** - for managing clipboard content on x11 systems
 
@@ -22,22 +23,22 @@ pip install requests
 
 **On Arch Based Systems:**
 ```bash
-sudo pacman -S grim jq slurp xclip flameshot python-requests
+sudo pacman -S grim jq slurp xclip flameshot python-requests slop
 ```
 
 **On Debian/Ubuntu based systems:**
 ```bash
-sudo apt install grim jq slurp xclip flameshot
+sudo apt install grim jq slurp xclip flameshot slop
 ```
 
 **On Fedora based systems:**
 ```bash
-sudo dnf install grim jq slurp xclip flameshot
+sudo dnf install grim jq slurp xclip flameshot slop
 ```
 
 **On Gentoo systems:**
 ```bash
-sudo emerge -av gui-apps/grim gui-apps/slurp app-misc/jq xclip flameshot
+sudo emerge -av gui-apps/grim gui-apps/slurp app-misc/jq xclip flameshot slop
 ```
 
 ## Installation
@@ -63,36 +64,13 @@ cd ..
 rm -rf e-zshot
 ```
 
-### Using Git without makepkg
+### For non-arch distros
 
 ```bash
 git clone https://github.com/RobinTT69/e-z-screenshot-linux
 cd e-z-screenshot-linux
 ```
-
-Now, assuming you have installed python as mentioned earlier, you can run the script by:
-```bash
-chmod +x e-z-flameshot.py
-./e-z-flameshot.py
-```
-
-Or if you are using the grim script (if Flameshot does not work):
-```bash
-chmod +x e-z-grim.py
-./e-z-grim.py
-```
-
-## Usage
-
-### Using Flameshot:
-```bash
-e-z-flameshot [OPTIONS]
-```
-
-### Using Grim:
-```bash
-e-z-grim [OPTIONS]
-```
+COMING SOON
 
 ## Options
 
@@ -119,9 +97,7 @@ e-z-grim [OPTIONS]
 
 Now run:
 ```bash
-./e-z-grim.py -a APIKEY
-# or
-e-z-grim -a APIKEY
+
 ```
 You are now done with the script setup! Try it out, see if it works. If you want to use your own subdomain, follow the steps below. Otherwise, you are done!
 
