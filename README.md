@@ -78,7 +78,7 @@ chmod +x ./e-zshot.py
 
 ## Configuration and usage
 
-**If you downloaded e-zshot from the aur, run e-zconfig and follow the onscreen prompts. Other wise:**
+**If you downloaded e-zshot from the aur, run `e-zconfig` and follow the onscreen prompts. Other wise:**
 
 ```bash
 cd e-z-screenshot-linux
