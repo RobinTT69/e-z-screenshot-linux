@@ -13,12 +13,10 @@ import logging
 import traceback
 import time
 import random
-#from PyQt5.QtWidgets import QApplication, QDialog, QLabel, QLineEdit, QVBoxLayout, QPushButton
-#from PyQt5.QtCore import Qt
-#from PyQt5.QtGui import QPixmap
+import string
 
 CONFIG_FILE = os.path.expanduser('~/.config/e-zshot/config.json')
-FONT_PATH = os.path.join(os.path.dirname(__file__), 'fonts', 'impact.ttf')  # Local font path
+DEFAULT_FONT_PATH = os.path.expanduser('~/.config/e-zshot/impact.ttf')  # Default font path
 
 # Configure logging
 LOG_FORMAT = "%(asctime)s - %(levelname)s - %(message)s"
@@ -89,8 +87,13 @@ def enter_domain(domain, config):
         config['domain'] = "https://i.e-z.host/"
         save_config(config)
 
+def generate_random_filename(length=6):
+    return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
+
 def save_to_disk(directory, file_name, data):
     try:
+        if not file_name:
+            file_name = generate_random_filename()  # Generate a random filename if none provided
         file_path = os.path.join(directory, file_name + ".png")  # Save as PNG
         with open(file_path, 'wb') as file:
             file.write(data)
@@ -100,13 +103,11 @@ def save_to_disk(directory, file_name, data):
         print(f"Error saving screenshot: {e}")
         exit(1)
 
-
-# def add_text_to_image(image_data, top_text=None, bottom_text=None, use_frame=False, text_color='white'):
-def add_text_to_image(image_data, top_text=None, bottom_text=None, text_color='white'):
+def add_text_to_image(image_data, top_text=None, bottom_text=None, text_color='white', font_path=DEFAULT_FONT_PATH):
     try:
         with Image.open(io.BytesIO(image_data)) as img:
             draw = ImageDraw.Draw(img)
-            font = ImageFont.truetype(FONT_PATH, 40)
+            font = ImageFont.truetype(font_path, 40)
 
             def draw_text_with_frame(text, position, is_bottom):
                 text_bbox = draw.textbbox((0, 0), text, font=font)
@@ -143,38 +144,6 @@ def get_clipboard_tool():
     else:
         return 'xclip'  # X11 clipboard tool
 
-# class TextInputDialog(QDialog):
-   # def __init__(self, parent=None):
-    #    super(TextInputDialog, self).__init__(parent)
-
-    #    self.top_text_edit = QLineEdit()
-     #   self.bottom_text_edit = QLineEdit()
-     #   self.top_text = None
-     #   self.bottom_text = None
-
-      #  self.init_ui()
-
-   # def init_ui(self):
-    #    self.setWindowTitle("Text Input")
-    #    layout = QVBoxLayout()
-    #    layout.addWidget(QLabel("Top Text:"))
-    #    layout.addWidget(self.top_text_edit)
-     #   layout.addWidget(QLabel("Bottom Text:"))
-     #   layout.addWidget(self.bottom_text_edit)
-
-    #    button = QPushButton('OK')
-     #   button.clicked.connect(self.on_button_click)
-    #    layout.addWidget(button)
-
-    #    self.setLayout(layout)
-    #    self.setModal(True)
-    #    self.show()
-
-   # def on_button_click(self):
-     #   self.top_text = self.top_text_edit.text()
-      #  self.bottom_text = self.bottom_text_edit.text()
-      #  self.accept()
-
 def take_screenshot_and_upload(api_key, config, args):
     try:
         if args.fullscreen:
@@ -196,53 +165,55 @@ def take_screenshot_and_upload(api_key, config, args):
           #  bottom_text = dialog.bottom_text
            # app.quit()
 
-      
             top_text = args.top_text
             bottom_text = args.bottom_text
 
         # Add text and frame to the screenshot
-        # screenshot_data = add_text_to_image(screenshot_data, top_text, bottom_text, args.use_frame, args.color)
-        screenshot_data = add_text_to_image(screenshot_data, top_text, bottom_text, args.color)
-        # Upload the screenshot using API
-        url = "https://api.e-z.host/files"
-        files = {"file": ("screenshot.png", screenshot_data, "image/png")}
-        headers = {"key": api_key}
+        screenshot_data = add_text_to_image(screenshot_data, top_text, bottom_text, args.color, args.font_path)
 
-        response = requests.post(url, headers=headers, files=files)
-        response.raise_for_status()
-        response_json = response.json()
-        image_url = response_json.get('imageUrl')
+        if not args.no_upload:
+            # Upload the screenshot using API
+            url = "https://api.e-z.host/files"
+            files = {"file": ("screenshot.png", screenshot_data, "image/png")}
+            headers = {"key": api_key}
 
-        if not image_url or image_url == "null":
-            logging.error("Image URL is empty or null.")
-            print("Error: Image URL is empty or null.")
-            exit(1)
+            response = requests.post(url, headers=headers, files=files)
+            response.raise_for_status()
+            response_json = response.json()
+            image_url = response_json.get('imageUrl')
 
-        # Extract unique ID from the URL
-        unique_id = image_url.split('/')[-1]
-
-        # Determine clipboard tool based on environment
-        clipboard_tool = get_clipboard_tool()
-
-        # Copy URL to clipboard using appropriate tool
-        final_url = config['domain'] + unique_id
-        if clipboard_tool == 'wl-copy':
-            subprocess.run([clipboard_tool], input=final_url.encode(), check=True)
-        elif clipboard_tool == 'xclip':
-            subprocess.run([clipboard_tool, '-sel', 'c'], input=final_url.encode(), check=True)
-
-        # Save to disk if directory is specified
-        save_to_disk = args.save_to_disk
-        if save_to_disk:
-            if os.path.isdir(save_to_disk) and os.access(save_to_disk, os.W_OK):
-                save_to_disk(save_to_disk, unique_id, screenshot_data)
-            else:
-                logging.error("Invalid directory or permission denied.")
-                print("Invalid directory or permission denied.")
+            if not image_url or image_url == "null":
+                logging.error("Image URL is empty or null.")
+                print("Error: Image URL is empty or null.")
                 exit(1)
 
-        logging.info(f"Screenshot URL: {final_url}")
-        send_notification("Screenshot Uploaded", f"URL: {final_url}")
+            # Extract unique ID from the URL
+            unique_id = image_url.split('/')[-1]
+
+            # Determine clipboard tool based on environment
+            clipboard_tool = get_clipboard_tool()
+
+            # Copy URL to clipboard using appropriate tool
+            final_url = config['domain'] + unique_id
+            if clipboard_tool == 'wl-copy':
+                subprocess.run([clipboard_tool], input=final_url.encode(), check=True)
+            elif clipboard_tool == 'xclip':
+                subprocess.run([clipboard_tool, '-sel', 'c'], input=final_url.encode(), check=True)
+
+            # Save to disk if directory is specified
+            if args.save_to_disk:
+                if os.path.isdir(args.save_to_disk) and os.access(args.save_to_disk, os.W_OK):
+                    save_to_disk(args.save_to_disk, unique_id, screenshot_data)
+                else:
+                    logging.error("Invalid directory or permission denied.")
+                    print("Invalid directory or permission denied.")
+                    exit(1)
+
+            logging.info(f"Screenshot URL: {final_url}")
+            send_notification("Screenshot Uploaded", f"URL: {final_url}")
+        else:
+            logging.info("Upload skipped due to '-n' option.")
+            send_notification("Screenshot Not Uploaded", "The screenshot was not uploaded due to the '-n' option.")
 
     except subprocess.CalledProcessError as e:
         logging.error(f"Error taking/uploading screenshot: {e}")
@@ -270,24 +241,24 @@ def main():
     config = load_config()
 
     parser = argparse.ArgumentParser(description="Screenshot tool that uploads to an external server.")
-    # parser.add_argument('-a', '--api-key', type=str, help="Enter API key")
-    # arser.add_argument('-d', '--domain', type=str, help="Enter the domain to be used")
+    parser.add_argument('-a', '--api-key', type=str, help="Enter API key")
+    parser.add_argument('-d', '--domain', type=str, help="Enter the domain to be used")
     parser.add_argument('-s', '--save-to-disk', type=str, help="Save the screenshot to the specified path")
     parser.add_argument('-v', '--verbose', action='store_true', help="Enable verbose logging for debugging")
     parser.add_argument('-f', '--fullscreen', action='store_true', help="Capture a fullscreen screenshot")
-   # parser.add_argument('-g', '--gui', action='store_true', help="Use graphical text input")
-    parser.add_argument('-t','--top-text', type=str, help="Text to display at the top of the screenshot")
-    parser.add_argument('-b','--bottom-text', type=str, help="Text to display at the bottom of the screenshot")
-    # parser.add_argument('-uf','--use-frame', action='store_true', help="Use a black frame around the text (only if text is provided)")
+    parser.add_argument('-n', '--no-upload', action='store_true', help="Disable uploading the screenshot to API")
+    parser.add_argument('-t', '--top-text', type=str, help="Text to display at the top of the screenshot")
+    parser.add_argument('-b', '--bottom-text', type=str, help="Text to display at the bottom of the screenshot")
     parser.add_argument('-c', '--color', type=str, default='white', help="Text color")
+    parser.add_argument('-fpath', '--font-path', type=str, default=DEFAULT_FONT_PATH, help="Path to the font file")
 
     args = parser.parse_args()
 
- #  if args.api_key:
-  #      enter_api_key(args.api_key, config)
+    if args.api_key:
+        enter_api_key(args.api_key, config)
 
- #   if args.domain:
-  #      enter_domain(args.domain, config)
+    if args.domain:
+        enter_domain(args.domain, config)
 
     api_key = config.get('api_key')
 
