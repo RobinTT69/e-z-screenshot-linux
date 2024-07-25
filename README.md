@@ -75,14 +75,11 @@ COMING SOON
 ## Options
 
 - `-h, --help`: List all options and usage
-- `-a, --api-key`: Enter API key (required once, unless updating)
-- `-d, --domain`: Enter the domain to be used (setup required, omit if not applicable)
 - `-s, --save-dir`: Directory to save the screenshot
 - `-f, --full-screen`: Capture full screen instead of a selected area
 - `-v, --verbose`: Enable verbose logging for debugging 
 - `-t, --top-text`: Text to display at the top of the screenshot (e.g. `-t 'Hello'`)
 - `-b, --bottom-text`: Text to display at the bottom of the screenshot (e.g. `-b 'World!'`)
-- `-g, --gui`: Launches PyQT dialog boxes to input text
 - `-c, --colour`: Choose text colour (e.g. `-c black`)
 
 ## Locating your API key for the script
