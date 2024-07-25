@@ -1,4 +1,3 @@
-
 # e-zshot
 
 ## Dependencies
