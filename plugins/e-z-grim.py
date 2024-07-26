@@ -200,7 +200,7 @@ def parse_color(color_str):
 
 def save_screenshot(data: bytes, save_path: str) -> None:
     if os.path.isdir(save_path):
-        filename = f"screenshot_{uuid.uuid4().hex[:8]}.png"
+        filename = f"{uuid.uuid4().hex[:8]}.png"
         full_path = os.path.join(save_path, filename)
     else:
         full_path = save_path
