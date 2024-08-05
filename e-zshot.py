@@ -48,7 +48,7 @@ def main():
     elif screenshot_tool == 'grim':
         script_name = 'e-z-grim'
     elif screenshot_tool == 'gnome':
-        script_name = 'e-z-grim'
+        script_name = 'e-z-gnome'
     else:
         print(f"Unsupported screenshot tool: {screenshot_tool}")
         sys.exit(1)
