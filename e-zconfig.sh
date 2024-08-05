@@ -115,7 +115,7 @@ main() {
 
         local screenshot_tool
         screenshot_tool=$(echo "$config" | jq -r '.screenshot_tool // empty')
-        screenshot_tool=$(prompt_selection "Select screenshot tool (grim or flameshot)" "$screenshot_tool" "(grim or flameshot)")
+        screenshot_tool=$(prompt_selection "Select screenshot tool (grim or flameshot)" "$screenshot_tool" "(grim, gnome or flameshot)")
         [[ -z $screenshot_tool ]] && screenshot_tool=$DEFAULT_SCREENSHOT_TOOL
     fi
 

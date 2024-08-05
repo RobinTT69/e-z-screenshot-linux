@@ -41,7 +41,11 @@ def load_config() -> dict:
 def detect_environment() -> str:
     wayland_env_vars = ['WAYLAND_DISPLAY', 'XDG_SESSION_TYPE']
     x11_env_vars = ['DISPLAY']
+    gnome_env_var = 'XDG_CURRENT_DESKTOP'
 
+    if 'XDG_CURRENT_DESKTOP' in os.environ and os.environ['XDG_CURRENT_DESKTOP'].lower() == 'gnome':
+        return 'gnome'
+    
     if any(var in os.environ for var in wayland_env_vars):
         if 'WAYLAND_DISPLAY' in os.environ and os.environ['WAYLAND_DISPLAY']:
             return 'wayland'
@@ -56,21 +60,34 @@ def detect_environment() -> str:
 def take_screenshot(full_screen: bool) -> bytes:
     try:
         env = detect_environment()
-        if full_screen:
-            command = ['grim', '-t', 'png', '-l', '0', '-'] if env == 'wayland' else ['grim', '-t', 'png', '-']
-            logging.debug("Taking full-screen screenshot...")
+        if env == 'gnome':
+            command = ['gnome-screenshot']
+            if full_screen:
+                command.extend(['--file', '/tmp/screenshot.png'])
+            else:
+                command.extend(['--area', '--file', '/tmp/screenshot.png'])
+            logging.debug("Taking screenshot with gnome-screenshot...")
+            subprocess.run(command, check=True)
+            with open('/tmp/screenshot.png', 'rb') as f:
+                result = f.read()
+            os.remove('/tmp/screenshot.png')
         else:
-            selector = 'slurp' if env == 'wayland' else 'slop'
-            logging.debug("Select area for screenshot...")
-            slop_result = subprocess.run([selector], capture_output=True, text=True, check=True)
-            geometry = slop_result.stdout.strip()
-            if not geometry:
-                raise ValueError("No area selected")
-            command = ['grim', '-g', geometry, '-t', 'png', '-l', '0', '-']
+            if full_screen:
+                command = ['grim', '-t', 'png', '-l', '0', '-']
+                logging.debug("Taking full-screen screenshot...")
+            else:
+                selector = 'slurp' if env == 'wayland' else 'slop'
+                logging.debug("Select area for screenshot...")
+                slop_result = subprocess.run([selector], capture_output=True, text=True, check=True)
+                geometry = slop_result.stdout.strip()
+                if not geometry:
+                    raise ValueError("No area selected")
+                command = ['grim', '-g', geometry, '-t', 'png', '-l', '0', '-']
+            
+            result = subprocess.run(command, capture_output=True, check=True).stdout
         
-        result = subprocess.run(command, capture_output=True, check=True)
         logging.debug("Screenshot captured successfully.")
-        return result.stdout
+        return result
     except subprocess.CalledProcessError as e:
         logging.error(f"Error taking screenshot: {e.stderr.strip()}")
         notify(f"Error taking screenshot: {e.stderr.strip()}")
