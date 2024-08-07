@@ -1,4 +1,4 @@
-## Dependencies test
+## Dependencies
 *Dependencies are automatically installed by your AUR Helper on Arch Linux.*
 
 - Python
