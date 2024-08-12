@@ -11,7 +11,7 @@ CONFIG_FILE = os.path.expanduser('~/.config/e-zshot/config.json')
 def load_config() -> dict:
     """Load the configuration file."""
     if not os.path.exists(CONFIG_FILE):
-        print("Configuration file missing. Please use the Go client to set up.")
+        print("Configuration file missing. Please use the config script to configure.")
         sys.exit(1)
 
     with open(CONFIG_FILE, 'r') as f:
@@ -24,7 +24,6 @@ def load_config() -> dict:
 
 def find_script(script_name: str) -> str:
     """Find the script with .py extension or fallback to without .py."""
-    # Define the paths to search for the scripts
     possible_paths = [
         os.path.join(os.path.dirname(__file__), 'plugins', script_name + '.py'),
         os.path.join(os.path.dirname(__file__), 'plugins', script_name),
@@ -53,14 +52,12 @@ def main():
         print(f"Unsupported screenshot tool: {screenshot_tool}")
         sys.exit(1)
 
-    # Find the script
     script_path = find_script(script_name)
     
     if not script_path:
         print(f"Script {script_name} not found.")
         sys.exit(1)
 
-    # If the script has a .py extension, run it with python3, otherwise execute it directly
     if script_path.endswith('.py'):
         subprocess.run(['python3', script_path] + sys.argv[1:])
     else:

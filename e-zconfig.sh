@@ -109,17 +109,13 @@ main() {
         verbose=$(echo "$config" | jq -r '.verbose // empty')
         verbose=$(prompt_bool "Enable verbose mode" "$verbose")
 
-        local text_plugin_enabled
-        text_plugin_enabled=$(echo "$config" | jq -r '.text_plugin_enabled // empty')
-        text_plugin_enabled=$(prompt_bool "Enable text processing plugin" "$text_plugin_enabled")
-
         local screenshot_tool
         screenshot_tool=$(echo "$config" | jq -r '.screenshot_tool // empty')
         screenshot_tool=$(prompt_selection "Select screenshot tool (grim or flameshot)" "$screenshot_tool" "(grim, gnome or flameshot)")
         [[ -z $screenshot_tool ]] && screenshot_tool=$DEFAULT_SCREENSHOT_TOOL
     fi
 
-    local new_config=$(jq -n --arg api_key "$api_key" --arg domain "$domain" --arg image_type "$image_type" --arg compression_level "$compression_level" --arg save_to_disk "$save_to_disk" --arg upload_to_api "$upload_to_api" --arg verbose "$verbose" --arg text_plugin_enabled "$text_plugin_enabled" --arg screenshot_tool "$screenshot_tool" '{api_key: $api_key, domain: $domain, image_type: $image_type, compression_level: $compression_level, save_to_disk: $save_to_disk, upload_to_api: $upload_to_api, verbose: $verbose, text_plugin_enabled: $text_plugin_enabled, screenshot_tool: $screenshot_tool}')
+    local new_config=$(jq -n --arg api_key "$api_key" --arg domain "$domain" --arg image_type "$image_type" --arg compression_level "$compression_level" --arg save_to_disk "$save_to_disk" --arg upload_to_api "$upload_to_api" --arg verbose "$verbose" --arg screenshot_tool "$screenshot_tool" '{api_key: $api_key, domain: $domain, image_type: $image_type, compression_level: $compression_level, save_to_disk: $save_to_disk, upload_to_api: $upload_to_api, verbose: $verbose, screenshot_tool: $screenshot_tool}')
 
     save_config "$new_config"
 

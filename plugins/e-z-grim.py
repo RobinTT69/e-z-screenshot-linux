@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 
-from PIL import Image, ImageDraw, ImageFont
 import subprocess
 import requests
 import argparse
@@ -13,6 +12,8 @@ import time
 import sys
 import os
 import io
+
+from PIL import Image, ImageDraw, ImageFont
 
 CONFIG_FILE = os.path.expanduser('~/.config/e-zshot/config.json')
 UPLOAD_URL = "https://api.e-z.host/files"
